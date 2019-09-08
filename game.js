@@ -20,11 +20,13 @@ var game = new Phaser.Game(config);
 function preload() {
     this.load.image('bg', 'assets/background.png');
     this.load.image('asteroid', 'assets/Asteroid.png');
+    this.load.audio('shootAudio', 'assets/shoot.wav');
 }
 
 function create() {
     this.image = this.add.image(800, 600, 'bg');
     this.title = this.add.text(400, 300, 'Asteroids', { fontFamily: "Times New Roman" });
+    shootAudio = this.sound.add('shootAudio');
 
     asteroidSpawnNum = 4; // The number of asteroids to spawn next wave, initially 4
     asteroids = this.add.group(); // The group of asteroids
