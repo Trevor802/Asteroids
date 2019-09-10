@@ -18,15 +18,15 @@ var Asteroid = new Phaser.Class({
         // Smaller asteroids vary more in speed and can move faster.
         switch (size) {
             case sizes.LARGE:
-                this.setScale(0.2);
+                this.setScale(1);
                 this.speed = 0.05;
                 break;
             case sizes.MEDIUM:
-                this.setScale(0.1);
+                this.setScale(0.5);
                 this.speed = 0.05 + 0.05 * Math.random();
                 break;
             case sizes.SMALL:
-                this.setScale(0.05);
+                this.setScale(0.25);
                 this.speed = 0.05 + 0.15 * Math.random();
                 break;
         }
@@ -80,32 +80,33 @@ var Asteroid = new Phaser.Class({
         this.setPosition(x, y);
     },
 
-    demolish: function (object, asteroids, bullets) {
+    demolish: function (object, asteroids) {
         // If the asteroid isn't the smallest size, create 2 new asteroids in its location
         if (this.size > sizes.SMALL) {
             for (i = 0; i < 2; i++) {
-                var newAsteroid = new Asteroid(object.scene, this.x, this.y, this.size - 1);
-
-                bullets.getChildren().forEach(function (bullet) {
-                    object.scene.physics.add.collider(newAsteroid, bullet, breakAsteroidCallback);
-                });
-                object.scene.physics.add.collider(newAsteroid, player, breakAsteroidCallback);
-
-                asteroids.add(newAsteroid, true);
+                asteroids.add(new Asteroid(object.scene, this.x, this.y, this.size - 1), true);
             }
         }
 
         // Kill the current asteroid
         // TODO: Play death animation before hiding
         asteroids.killAndHide(this);
-
+        console.log("Fire");
         switch (this.size) {
             case sizes.LARGE:
                 object.scene.score += 20;
+                object.scene.scoreLabel.text = "SCORE " + object.scene.score;
+                break;
             case sizes.MEDIUM:
                 object.scene.score += 50;
+                object.scene.scoreLabel.text = "SCORE " + object.scene.score;
+                break;
             case sizes.SMALL:
                 object.scene.score += 100;
+                object.scene.scoreLabel.text = "SCORE " + object.scene.score;
+                break;
+              default:
+                break;
         }
     }
 });

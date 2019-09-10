@@ -25,6 +25,16 @@ class GameScene extends Phaser.Scene {
     //Asteroids
     this.asteroidSpawnNum = 4; // The number of asteroids to spawn next wave, initially 4
     this.asteroids = this.physics.add.group({ classType: Asteroid, runChildUpdate: true }); // The group of asteroids
+
+    //Collision Asteroid and Enemy
+    this.physics.add.overlap(this.projectiles, this.asteroids, this.hitAsteroid, null, this);
+
+    //Collision Asteroid and Player
+    this.physics.add.overlap(this.player, this.asteroids, this.hurtPlayer, null, this);
+
+    //SCORE
+    this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 0", 16);
+    this.score = 0;
   }
 
   update(time, delta) {
@@ -83,5 +93,27 @@ class GameScene extends Phaser.Scene {
       this.player.x += gameSettings.playerAccleration * Math.sin(this.player.angle * Math.PI/180);
       this.player.y -= gameSettings.playerAccleration * Math.cos(this.player.angle * Math.PI/180);
     }
+  }
+
+  hitAsteroid(projectile, asteroid) {
+    if (!asteroid.active)
+      return;
+    //var explosion = new Explosion(this, enemy.x, enemy.y);
+
+    projectile.destroy();
+    //this.resetAsteroid(asteroid);
+    //asteroid.disableBody(true, true);
+    asteroid.demolish({scene: this}, this.asteroids)
+
+    //this.score += 15;
+    //this.scoreLabel.text = "SCORE " + this.score;
+    //var scoreFormatted = this.zeroPad(this.score, 6);
+    //this.scoreLabel.text = "SCORE " + scoreFormatted;
+
+    //this.explosionSound.play();
+  }
+
+  hurtPlayer(player, projectile) {
+    this.scene.restart("playGame");
   }
 }
