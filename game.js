@@ -17,8 +17,11 @@ var config = {
 var gameSettings = {
   playerSpeed: 200,
   rotationSpeed: 5,
-  playerAccleration: 5,
+  playerAcceleration: 0.0001,
+  playerDeceleration: 0.000025,
+  shootRecoil: 0.1,
   beamSpeed: 250,
+  terminalVelocity: 0.2,
 }
 
 var game = new Phaser.Game(config);
