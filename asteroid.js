@@ -94,7 +94,7 @@ var Asteroid = new Phaser.Class({
                 asteroids.add(newAsteroid, true);
             }
         }
-
+        explodeAudio.play();
         // Kill the current asteroid
         // TODO: Play death animation before hiding
         asteroids.killAndHide(this);

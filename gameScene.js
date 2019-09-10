@@ -9,6 +9,12 @@ class GameScene extends Phaser.Scene {
     this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
     this.background.setOrigin(0, 0);
 
+    //Sounds
+    this.shootAudio = this.sound.add('shootAudio');
+    this.explodeAudio = this.sound.add('explodeAudio');
+    this.backgroundMusic = this.sound.add('bgm');
+    this.backgroundMusic.play({loop: true, volume: 0.3});
+
     //Creating PLayer
     this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
     this.player.play("thrust");
@@ -41,6 +47,7 @@ class GameScene extends Phaser.Scene {
     //Shoot Beams
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       if(this.player.active) {
+        this.shootAudio.play();
         this.projectiles.add(new Beam(this));
       }
     }

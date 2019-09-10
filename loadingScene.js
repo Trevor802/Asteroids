@@ -10,6 +10,10 @@ class LoadingScene extends Phaser.Scene {
     this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
     this.load.image('asteroid', 'assets/images/Asteroid.png');
 
+    this.load.audio('shootAudio', 'assets/MissileFire.wav');
+    this.load.audio('explodeAudio', 'assets/AsteroidExplode.wav');
+    this.load.audio('bgm', 'assets/Blue_Sizzle_Madness_Paranoia.mp3');
+
     //Load Font
     this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");
 
