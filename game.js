@@ -19,7 +19,7 @@ var gameSettings = {
   rotationSpeed: 5,
   playerAcceleration: 0.0001,
   playerDeceleration: 0.000025,
-  shootAcceleration: 0.005,
+  shootRecoil: 0.1,
   beamSpeed: 250,
   terminalVelocity: 0.2,
 }
