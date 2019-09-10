@@ -5,7 +5,7 @@ var config = {
     physics: {
         default:'arcade',
         arcade: {
-            gravity: {y : 200}
+            gravity: {y : 0}
         }
     },
     scene: {
@@ -23,11 +23,16 @@ function preload() {
 }
 
 function create() {
+    this.physics.world.setBounds(0, 0, 800, 600);
+
     this.image = this.add.image(800, 600, 'bg');
     this.title = this.add.text(400, 300, 'Asteroids', { fontFamily: "Times New Roman" });
 
+    this.score = 0;
+    scoreText = this.add.text(40, 40, this.score, { fontFamily: "Times New Roman" });
+
     asteroidSpawnNum = 4; // The number of asteroids to spawn next wave, initially 4
-    asteroids = this.add.group(); // The group of asteroids
+    asteroids = this.physics.add.group({ classType: Asteroid, runChildUpdate: true }); // The group of asteroids
     cursors = this.input.keyboard.createCursorKeys(); // The state of the keyboard
 
 
@@ -60,7 +65,9 @@ function update(time, delta) {
     // This is a temporary demonstration of the demolition of asteroids.
     // Press the space bar to destroy asteroids.
     if (cursors.space.isDown) {
-        asteroids.getChildren()[index].demolish(this, asteroids);
+        asteroids.getChildren()[index].demolish({ scene: this }, asteroids);
         index++;
     }
+
+    scoreText.setText(this.score.toString());
 }

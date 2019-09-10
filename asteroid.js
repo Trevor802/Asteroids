@@ -80,16 +80,32 @@ var Asteroid = new Phaser.Class({
         this.setPosition(x, y);
     },
 
-    demolish: function (scene, asteroids) {
+    demolish: function (object, asteroids, bullets) {
         // If the asteroid isn't the smallest size, create 2 new asteroids in its location
         if (this.size > sizes.SMALL) {
             for (i = 0; i < 2; i++) {
-                asteroids.add(new Asteroid(scene, this.x, this.y, this.size - 1), true);
+                var newAsteroid = new Asteroid(object.scene, this.x, this.y, this.size - 1);
+
+                bullets.getChildren().forEach(function (bullet) {
+                    object.scene.physics.add.collider(newAsteroid, bullet, breakAsteroidCallback);
+                });
+                object.scene.physics.add.collider(newAsteroid, player, breakAsteroidCallback);
+
+                asteroids.add(newAsteroid, true);
             }
         }
 
         // Kill the current asteroid
         // TODO: Play death animation before hiding
         asteroids.killAndHide(this);
+
+        switch (this.size) {
+            case sizes.LARGE:
+                object.scene.score += 20;
+            case sizes.MEDIUM:
+                object.scene.score += 50;
+            case sizes.SMALL:
+                object.scene.score += 100;
+        }
     }
 });
