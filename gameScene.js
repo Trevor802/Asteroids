@@ -57,12 +57,7 @@ class GameScene extends Phaser.Scene {
 
     //Shoot Beams
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      if(this.player.active) {
-        this.shootAudio.play();
-        this.projectiles.add(new Beam(this));
-        this.currentVelocity.x -= gameSettings.shootAcceleration * Math.sin(this.player.angle * Math.PI/180) * delta;
-        this.currentVelocity.y += gameSettings.shootAcceleration * Math.cos(this.player.angle * Math.PI/180) * delta;
-      }
+      shoot();
     }
 
     //Deleting the beam objects
@@ -124,6 +119,16 @@ class GameScene extends Phaser.Scene {
 
     this.player.x += this.currentVelocity.x * delta;
     this.player.y += this.currentVelocity.y * delta;
+  }
+
+  shoot() {
+    if(!this.player.active)
+      return;
+    
+    this.shootAudio.play();
+    this.projectiles.add(new Beam(this));
+    this.currentVelocity.x -= gameSettings.shootAcceleration * Math.sin(this.player.angle * Math.PI/180) * delta;
+    this.currentVelocity.y += gameSettings.shootAcceleration * Math.cos(this.player.angle * Math.PI/180) * delta;
   }
 
   hitAsteroid(projectile, asteroid) {
