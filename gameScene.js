@@ -6,6 +6,7 @@ class GameScene extends Phaser.Scene {
   create() {
     //Background
     //this.background = this.add.image(0, 0, "background");
+    this.currentVelocity = new Phaser.Math.Vector2(0, 0);
     this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
     this.background.setOrigin(0, 0);
 
@@ -50,7 +51,7 @@ class GameScene extends Phaser.Scene {
     //On press, call movePlayerManager || On release set the velocities to 0
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
-    this.movePlayerManager();
+    this.movePlayerManager(delta);
     this.physics.world.wrap(this.player, 32);
     //Phaser.Math.wrap(this.player.x, 0, config.width);
 
@@ -59,6 +60,8 @@ class GameScene extends Phaser.Scene {
       if(this.player.active) {
         this.shootAudio.play();
         this.projectiles.add(new Beam(this));
+        this.currentVelocity.x -= gameSettings.shootAcceleration * Math.sin(this.player.angle * Math.PI/180) * delta;
+        this.currentVelocity.y += gameSettings.shootAcceleration * Math.cos(this.player.angle * Math.PI/180) * delta;
       }
     }
 
@@ -89,17 +92,38 @@ class GameScene extends Phaser.Scene {
     }
   }
 
-  movePlayerManager() {
+  movePlayerManager(delta) {
     if(this.cursorKeys.left.isDown) {
       this.player.angle -= gameSettings.rotationSpeed % 360;
     } else if (this.cursorKeys.right.isDown) {
       this.player.angle += gameSettings.rotationSpeed % 360;
     }
 
+    // Accelerate when the up key is held
     if(this.cursorKeys.up.isDown) {
-      this.player.x += gameSettings.playerAccleration * Math.sin(this.player.angle * Math.PI/180);
-      this.player.y -= gameSettings.playerAccleration * Math.cos(this.player.angle * Math.PI/180);
+      this.currentVelocity.x += gameSettings.playerAcceleration * Math.sin(this.player.angle * Math.PI/180) * delta;
+      this.currentVelocity.y -= gameSettings.playerAcceleration * Math.cos(this.player.angle * Math.PI/180) * delta;
+    } else {
+      // Decelerate a bit when not accelerating
+      var magnitude = this.currentVelocity.length();
+      magnitude -= gameSettings.playerDeceleration * delta;
+      if (magnitude <= 0) {
+        this.currentVelocity.x = 0;
+        this.currentVelocity.y = 0;
+      } else {
+        this.currentVelocity.normalize();
+        this.currentVelocity.scale(magnitude);
+      }
     }
+
+    // Have a terminal velocity so the player can't accelerate into light speed
+    if (this.currentVelocity.length() > gameSettings.terminalVelocity) {
+      this.currentVelocity.normalize();
+      this.currentVelocity.scale(gameSettings.terminalVelocity);
+    }
+
+    this.player.x += this.currentVelocity.x * delta;
+    this.player.y += this.currentVelocity.y * delta;
   }
 
   hitAsteroid(projectile, asteroid) {
