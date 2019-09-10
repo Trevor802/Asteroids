@@ -87,11 +87,10 @@ var Asteroid = new Phaser.Class({
                 asteroids.add(new Asteroid(object.scene, this.x, this.y, this.size - 1), true);
             }
         }
-        explodeAudio.play();
+        object.scene.explodeAudio.play();
         // Kill the current asteroid
         // TODO: Play death animation before hiding
         asteroids.killAndHide(this);
-        console.log("Fire");
         switch (this.size) {
             case sizes.LARGE:
                 object.scene.score += 20;

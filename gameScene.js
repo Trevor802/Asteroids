@@ -13,9 +13,9 @@ class GameScene extends Phaser.Scene {
     this.shootAudio = this.sound.add('shootAudio');
     this.explodeAudio = this.sound.add('explodeAudio');
     this.backgroundMusic = this.sound.add('bgm');
-    this.backgroundMusic.play({loop: true, volume: 0.3});
+    this.backgroundMusic.play({loop: true, volume: 10, rate: 1});
 
-    //Creating PLayer
+    //Creating PLayers
     this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
     this.player.play("thrust");
 
@@ -120,7 +120,10 @@ class GameScene extends Phaser.Scene {
     //this.explosionSound.play();
   }
 
-  hurtPlayer(player, projectile) {
+  hurtPlayer(player, asteroid) {
+    if (!asteroid.active)
+      return;
+
     this.scene.restart("playGame");
   }
 }
