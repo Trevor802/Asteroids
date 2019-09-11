@@ -13,8 +13,6 @@ class GameScene extends Phaser.Scene {
     //Sounds
     this.shootAudio = this.sound.add('shootAudio');
     this.explodeAudio = this.sound.add('explodeAudio');
-    this.backgroundMusic = this.sound.add('bgm');
-    this.backgroundMusic.play({loop: true, volume: 10, rate: 1});
 
     //Creating PLayers
     this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
@@ -42,6 +40,8 @@ class GameScene extends Phaser.Scene {
     //SCORE
     this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 0", 16);
     this.score = 0;
+    this.livesLabel = this.add.bitmapText(config.width - 50, 5, "pixelFont", "LIVES 3", 16);
+    this.lives = 3;
 
     this.waveResetTime = 0;
   }
@@ -54,7 +54,7 @@ class GameScene extends Phaser.Scene {
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
     this.movePlayerManager(delta);
-    this.physics.world.wrap(this.player, 32);
+    this.physics.world.wrap(this.player, 0);
     //Phaser.Math.wrap(this.player.x, 0, config.width);
 
     //Shoot Beams
@@ -160,7 +160,9 @@ class GameScene extends Phaser.Scene {
   hurtPlayer(player, asteroid) {
     if (!asteroid.active)
       return;
+    //this.lives -= 1;
+    //this.livesLabel.text = "LIVES " + this.lives;
     this.backgroundMusic.stop();
-    this.scene.restart("playGame");
+    //this.scene.restart("playGame");
   }
 }
