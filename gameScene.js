@@ -30,7 +30,7 @@ class GameScene extends Phaser.Scene {
     this.projectiles = this.add.group();
 
     //Asteroids
-    this.asteroidSpawnNum = 4; // The number of asteroids to spawn next wave, initially 4
+    this.asteroidSpawnNum = gameSettings.initialAsteroids; // The number of asteroids to spawn next wave, initial amount set here
     this.asteroids = this.physics.add.group({ classType: Asteroid, runChildUpdate: true }); // The group of asteroids
 
     //Collision Asteroid and Enemy
@@ -42,6 +42,8 @@ class GameScene extends Phaser.Scene {
     //SCORE
     this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 0", 16);
     this.score = 0;
+
+    this.waveResetTime = 0;
   }
 
   update(time, delta) {
@@ -67,23 +69,29 @@ class GameScene extends Phaser.Scene {
     }
 
     // Move all the asteroids
-    this.asteroids.getChildren().forEach(function (asteroid) {
-        asteroid.move(delta);
-    });
+    for (var i = 0; i < this.asteroids.getChildren().length; i++) {
+        this.asteroids.getChildren()[i].move(delta, { scene: this });
+    }
 
     // Begin the next wave if all asteroids are gone
     if (this.asteroids.countActive(true) == 0) {
+        if (this.waveResetTime > 0) {
+            this.waveResetTime -= delta;
+            return;
+        }
+
+        this.waveResetTime = gameSettings.spawnDelay;
+
         // Clear out inactive asteroids, remove them from the scene and destroy them
         this.asteroids.clear(true, true);
-        //index = 0;
 
         // Spawn new asteroids
         for (i = 0; i < this.asteroidSpawnNum; i++) {
             this.asteroids.add(new Asteroid(this, -1, -1, sizes.LARGE), true);
         }
 
-        // Make next wave spawn 2 more asteroids than this one (this is what it looked like Asteroids was doing)
-        this.asteroidSpawnNum += 2;
+        // Make next wave spawn more asteroids than this one
+        this.asteroidSpawnNum += gameSettings.asteroidWaveIncrease;
     }
   }
 
