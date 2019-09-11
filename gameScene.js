@@ -160,7 +160,7 @@ class GameScene extends Phaser.Scene {
   hurtPlayer(player, asteroid) {
     if (!asteroid.active)
       return;
-
+    this.backgroundMusic.stop();
     this.scene.restart("playGame");
   }
 }
