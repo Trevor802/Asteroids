@@ -146,6 +146,34 @@ var Asteroid = new Phaser.Class({
             }
         }
 
+        // Handle literal corner case
+        if (childrenCount == 2) {
+            childrenCount++;
+            var cornerX = x;
+            var cornerY = y;
+
+            if (x < 400) {
+                cornerX += 800;
+            } else {
+                cornerX -= 800;
+            }
+
+            if (y < 300) {
+                cornerY += 600;
+            } else {
+                cornerY -= 600;
+            }
+
+            if (this.childAsteroids.length < childrenCount) {
+                var newAsteroid = new Asteroid(object.scene, cornerX, cornerY, this.size);
+                newAsteroid.setIsChild(true);
+                this.childAsteroids.push(newAsteroid);
+                object.scene.asteroids.add(newAsteroid, true);
+            } else {
+                this.childAsteroids[childrenCount - 1].setPosition(cornerX, cornerY);
+            }
+        }
+
         // Remove any "excess" asteroids
         while (this.childAsteroids.length > childrenCount) {
             object.scene.asteroids.killAndHide(this.childAsteroids[this.childAsteroids.length - 1]);
