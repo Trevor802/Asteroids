@@ -139,7 +139,7 @@ class GameScene extends Phaser.Scene {
   shoot() {
     if(!this.player.active)
       return;
-
+    this.changeScore(gameSettings.shootCostPoint);
     this.shootAudio.play();
     this.projectiles.add(new Beam(this));
     this.currentVelocity.x -= gameSettings.shootRecoil * Math.sin(this.player.angle * Math.PI/180);
@@ -212,10 +212,17 @@ class GameScene extends Phaser.Scene {
   }
 
   zeroPad(number, size) {
-    var stringNumber = String(number);
+    var stringNumber = String(Math.abs(number));
     while(stringNumber.length < (size || 2)) {
       stringNumber = "0" + stringNumber;
     }
-    return stringNumber;
+    return (number < 0 ? "-" : "") + stringNumber;
+  }
+
+  changeScore(number){
+    this.score += number;
+    var scoreFormatted = this.zeroPad(this.score, 6)
+    this.scoreLabel.text = "SCORE " + scoreFormatted;
+    globalScore = scoreFormatted;
   }
 }

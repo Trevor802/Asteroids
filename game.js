@@ -27,6 +27,7 @@ var gameSettings = {
   asteroidWaveIncrease: 1,
   asteroidBreakNum: 2,
   spawnDelay: 3000,
+  shootCostPoint: -5,
 }
 
 var game = new Phaser.Game(config);
