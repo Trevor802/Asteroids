@@ -57,6 +57,8 @@ class GameScene extends Phaser.Scene {
     this.player.body.velocity.y = 0;
     this.movePlayerManager(delta);
     this.physics.world.wrap(this.player, 0);
+    this.physics.world.wrapArray(this.projectiles.getChildren(), 0);
+
     //Phaser.Math.wrap(this.player.x, 0, config.width);
 
     //Shoot Beams
@@ -70,7 +72,7 @@ class GameScene extends Phaser.Scene {
     //Deleting the beam objects
     for (var i = 0; i < this.projectiles.getChildren().length; i++) {
       var beam = this.projectiles.getChildren()[i];
-      beam.update();
+      beam.update(delta);
     }
 
     // Move all the asteroids

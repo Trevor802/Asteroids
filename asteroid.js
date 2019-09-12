@@ -5,29 +5,31 @@ const sizes = {
 }
 
 var Asteroid = new Phaser.Class({
-    Extends: Phaser.GameObjects.Image,
+    Extends: Phaser.GameObjects.Sprite,
 
     initialize:
 
     function Asteroid(scene, posX, posY, size) {
-        Phaser.GameObjects.Image.call(this, scene)
+        Phaser.GameObjects.Sprite.call(this, scene)
 
-        this.setTexture('asteroid');
         this.isChild = false;
 
         // Change the scale and speed of the asteroids to match the size of the asteroid.
         // Smaller asteroids vary more in speed and can move faster.
         switch (size) {
             case sizes.LARGE:
-                this.setScale(1);
+                this.setTexture('asteroid_big');
+                this.play("ast_big_anim");
                 this.speed = 0.05;
                 break;
             case sizes.MEDIUM:
-                this.setScale(0.5);
+                this.setTexture('asteroid_medium');
+                this.play("ast_med_anim");
                 this.speed = 0.05 + 0.05 * Math.random();
                 break;
             case sizes.SMALL:
-                this.setScale(0.25);
+                this.setTexture('asteroid_small');
+                this.play("ast_small_anim");
                 this.speed = 0.05 + 0.15 * Math.random();
                 break;
         }
@@ -88,7 +90,7 @@ var Asteroid = new Phaser.Class({
 
                 object.scene.asteroids.killAndHide(this);
                 object.scene.asteroids.remove(this, true, true);
-                break;
+                return;
             }
         }
 
@@ -179,6 +181,11 @@ var Asteroid = new Phaser.Class({
             object.scene.asteroids.killAndHide(this.childAsteroids[this.childAsteroids.length - 1]);
             object.scene.asteroids.remove(this.childAsteroids[this.childAsteroids.length - 1], true, true);
             this.childAsteroids.pop();
+        }
+
+        // Sync child animation with parent
+        for (var i = 0; i < this.childAsteroids.length; i++) {
+            this.childAsteroids[i].setFrame(this.anims.currentFrame.textureFrame);
         }
     },
 

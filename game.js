@@ -9,7 +9,7 @@ var config = {
     default: "arcade",
     arcade: {
       //gravity: {y: 200},
-      debug: true
+      debug: false
     }
   }
 }
@@ -21,6 +21,7 @@ var gameSettings = {
   playerDeceleration: 0.000025,
   shootRecoil: 0.1,
   beamSpeed: 250,
+  beamLifetime: 1500,
   terminalVelocity: 0.2,
   initialAsteroids: 1,
   asteroidWaveIncrease: 1,
@@ -29,7 +30,3 @@ var gameSettings = {
 }
 
 var game = new Phaser.Game(config);
-
-/*window.onload = function () {
-
-}*/
