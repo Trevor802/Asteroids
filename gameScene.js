@@ -42,8 +42,22 @@ class GameScene extends Phaser.Scene {
     this.scoreLabel.setDepth(100);
     this.score = 0;
 
+    //Wave messages
+    this.waveMessage = this.add.bitmapText(400, 300, "pixelFont", "WAVE CLEARED!", 32);
+    this.waveMessage.setOrigin(0.5, 0.5);
+    this.waveMessage.setCenterAlign();
+    this.waveMessage.setDepth(100);
+
+    //Wave outlines
+    this.clearedOutline = this.add.image(config.width / 2, config.height / 2, "wave_cleared");
+    this.clearedOutline.setVisible(false);
+
+    this.incomingOutline = this.add.image(config.width / 2, config.height / 2, "asteroids_incoming");
+    this.incomingOutline.setVisible(false);
+
     //Lives
     this.livesLabel = this.add.bitmapText(config.width - 100, 5, "pixelFont", "LIVES  3", 32);
+    this.livesLabel.setDepth(100);
     this.lives = 3;
 
     this.waveResetTime = 0;
@@ -84,8 +98,24 @@ class GameScene extends Phaser.Scene {
     // Begin the next wave if all asteroids are gone
     if (this.asteroids.countActive(true) == 0) {
         if (this.waveResetTime > 0) {
+            if (this.waveResetTime > gameSettings.spawnDelay * 2/3) {
+              this.clearedOutline.setVisible(true);
+              this.waveMessage.text = "WAVE CLEARED!";
+            } else if (this.waveResetTime < gameSettings.spawnDelay/3) {
+              this.incomingOutline.setVisible(true);
+              this.clearedOutline.setVisible(false);
+              this.waveMessage.text = this.asteroidSpawnNum + " INCOMING\nASTEROIDS DETECTED!";
+            } else {
+              this.clearedOutline.setVisible(false);
+              this.waveMessage.text = "";
+            }
+
             this.waveResetTime -= delta;
             return;
+        } else {
+          this.incomingOutline.setVisible(false);
+          this.clearedOutline.setVisible(false);
+          this.waveMessage.text = "";
         }
 
         this.waveResetTime = gameSettings.spawnDelay;
