@@ -1,6 +1,6 @@
 var config = {
-  width: 800,
-  height: 600,
+  width: 1200,
+  height: 900,
   backgroundColor: 0x000000,
   scene: [LoadingScene, GameScene, RestartScene],
   pixelArt: true,
@@ -17,7 +17,7 @@ var config = {
 var gameSettings = {
   playerSpeed: 200,
   rotationSpeed: 5,
-  playerAcceleration: 0.0001,
+  playerAcceleration: 0,
   playerDeceleration: 0.000025,
   shootRecoil: 0.1,
   beamSpeed: 250,
