@@ -39,6 +39,7 @@ class GameScene extends Phaser.Scene {
 
     //SCORE
     this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 000000", 32);
+    this.scoreLabel.setDepth(100);
     this.score = 0;
 
     //Lives
@@ -206,6 +207,8 @@ class GameScene extends Phaser.Scene {
       repeat: 0,
       onComplete: function() {
         this.player.alpha = 1; //Once tween is done, we remove the transparency
+        this.currentVelocity.x = 0;
+        this.currentVelocity.y = 0;
       },
       callbackScope: this
     });
