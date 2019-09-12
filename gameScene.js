@@ -43,7 +43,7 @@ class GameScene extends Phaser.Scene {
     this.score = 0;
 
     //Wave messages
-    this.waveMessage = this.add.bitmapText(400, 300, "pixelFont", "WAVE CLEARED!", 32);
+    this.waveMessage = this.add.bitmapText(config.width / 2, config.height / 2, "pixelFont", "WAVE CLEARED!", 32);
     this.waveMessage.setOrigin(0.5, 0.5);
     this.waveMessage.setCenterAlign();
     this.waveMessage.setDepth(100);

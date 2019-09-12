@@ -39,24 +39,24 @@ var Asteroid = new Phaser.Class({
         // Randomly place the asteroid at the border of the screen
         // TODO: Replace hard-coded screen bounds
         if (posX == -1 && posY == -1) {
-            var perimeter = 2 * (800 - this.displayWidth) + 2 * (600 - this.displayHeight);
+            var perimeter = 2 * (config.width - this.displayWidth) + 2 * (config.height - this.displayHeight);
             var placement = perimeter * Math.random();
-            if (placement < 2 * (800 - this.displayWidth)) {
-                if (placement < (800 - this.displayWidth)) {
+            if (placement < 2 * (config.width - this.displayWidth)) {
+                if (placement < (config.width - this.displayWidth)) {
                     posX = placement + this.displayWidth / 2;
                     posY = this.displayHeight / 2;
                 } else {
-                    posX = placement - (800 - this.displayWidth / 2);
-                    posY = (600 - this.displayHeight / 2);
+                    posX = placement - (config.width - this.displayWidth / 2);
+                    posY = (config.height - this.displayHeight / 2);
                 }
             } else {
-                placement -= 2 * (800 - this.displayWidth);
-                if (placement < (600 - this.displayHeight)) {
+                placement -= 2 * (config.width - this.displayWidth);
+                if (placement < (config.height - this.displayHeight)) {
                     posX = this.displayWidth / 2;
                     posY = placement + this.displayHeight / 2;
                 } else {
-                    posX = (800 - this.displayWidth / 2);
-                    posY = placement - (600 - this.displayHeight / 2);
+                    posX = (config.width - this.displayWidth / 2);
+                    posY = placement - (config.height - this.displayHeight / 2);
                 }
             }
         }
@@ -96,9 +96,9 @@ var Asteroid = new Phaser.Class({
 
         // Move the asteroid based on the time passed. Wrap around when reaching the screen edge.
         var x = Phaser.Math.Wrap(this.x + delta * this.speed * this.direction.x,
-            0, 800);
+            0, config.width);
         var y = Phaser.Math.Wrap(this.y + delta * this.speed * this.direction.y,
-            0, 600);
+            0, config.height);
         this.setPosition(x, y);
 
         // Add "child asteroids" to this asteroid. To the player it just looks like one asteroid
@@ -107,44 +107,44 @@ var Asteroid = new Phaser.Class({
         if (x >= 0 && x < this.displayWidth / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x + 800, this.y, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x + config.width, this.y, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x + 800, this.y);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x + config.width, this.y);
             }
-        } else if (x < 800 && x > 800 - this.displayWidth / 2) {
+        } else if (x < config.width && x > config.width - this.displayWidth / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x - 800, this.y, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x - config.width, this.y, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x - 800, this.y);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x - config.width, this.y);
             }
         }
 
         if (y >= 0 && y < this.displayHeight / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x, this.y + 600, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x, this.y + config.height, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y + 600);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y + config.height);
             }
-        } else if (y < 600 && y > 600 - this.displayHeight / 2) {
+        } else if (y < config.height && y > config.height - this.displayHeight / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x, this.y - 600, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x, this.y - config.height, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y - 600);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y - config.height);
             }
         }
 
@@ -154,16 +154,16 @@ var Asteroid = new Phaser.Class({
             var cornerX = x;
             var cornerY = y;
 
-            if (x < 400) {
-                cornerX += 800;
+            if (x < (config.width / 2)) {
+                cornerX += config.width;
             } else {
-                cornerX -= 800;
+                cornerX -= config.width;
             }
 
-            if (y < 300) {
-                cornerY += 600;
+            if (y < (config.height / 2)) {
+                cornerY += config.height;
             } else {
-                cornerY -= 600;
+                cornerY -= config.height;
             }
 
             if (this.childAsteroids.length < childrenCount) {
