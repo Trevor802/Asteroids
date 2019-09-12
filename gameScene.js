@@ -40,6 +40,8 @@ class GameScene extends Phaser.Scene {
     //SCORE
     this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 0", 16);
     this.score = 0;
+
+    //Lives
     this.livesLabel = this.add.bitmapText(config.width - 50, 5, "pixelFont", "LIVES 3", 16);
     this.lives = 3;
 
@@ -162,7 +164,8 @@ class GameScene extends Phaser.Scene {
       return;
     //this.lives -= 1;
     //this.livesLabel.text = "LIVES " + this.lives;
-    this.backgroundMusic.stop();
-    //this.scene.restart("playGame");
+    //this.backgroundMusic.stop();
+    this.scene.stop("playGame");
+    this.scene.start("restartGame");
   }
 }
