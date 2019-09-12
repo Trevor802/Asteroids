@@ -15,7 +15,7 @@ class GameScene extends Phaser.Scene {
     this.explodeAudio = this.sound.add('explodeAudio');
 
     //Creating PLayers
-    this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
+    this.player = this.physics.add.sprite(config.width / 2, config.height/2, "player");
     this.player.play("thrust");
 
     //Ship Controls
@@ -38,11 +38,11 @@ class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.asteroids, this.hurtPlayer, null, this);
 
     //SCORE
-    this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 0", 16);
+    this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 000000", 32);
     this.score = 0;
 
     //Lives
-    this.livesLabel = this.add.bitmapText(config.width - 50, 5, "pixelFont", "LIVES 3", 16);
+    this.livesLabel = this.add.bitmapText(config.width - 100, 5, "pixelFont", "LIVES  3", 32);
     this.lives = 3;
 
     this.waveResetTime = 0;
@@ -61,6 +61,9 @@ class GameScene extends Phaser.Scene {
 
     //Shoot Beams
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      if(this.player.alpha < 1) {
+        return;
+      }
       this.shoot();
     }
 
@@ -151,21 +154,66 @@ class GameScene extends Phaser.Scene {
     //asteroid.disableBody(true, true);
     asteroid.demolish({scene: this}, this.asteroids)
 
-    //this.score += 15;
-    //this.scoreLabel.text = "SCORE " + this.score;
-    //var scoreFormatted = this.zeroPad(this.score, 6);
-    //this.scoreLabel.text = "SCORE " + scoreFormatted;
-
     //this.explosionSound.play();
   }
 
   hurtPlayer(player, asteroid) {
-    if (!asteroid.active)
+    if (!asteroid.active) {
       return;
-    //this.lives -= 1;
-    //this.livesLabel.text = "LIVES " + this.lives;
+    }
+
+    if(this.player.alpha < 1) {
+      return;
+    }
+
+    this.lives -= 1;
+    this.livesLabel.text = "LIVES  " + this.lives;
+
+    this.player.disableBody(true, true);
+
+    this.time.addEvent({
+      delay: 1000,
+      callback: this.resetPlayer,
+      callbackScope: this,
+      loop: false
+    });
+
     //this.backgroundMusic.stop();
-    this.scene.stop("playGame");
-    this.scene.start("restartGame");
+    if(this.lives <= -1) {
+      this.scene.stop("playGame");
+      this.scene.start("restartGame");
+    }
+  }
+
+  resetPlayer() {
+    var x = config.width / 2;
+    var y = -8; //Hidden at the bottom of the screen
+    this.player.enableBody(true, x, y, true, true);
+    this.player.angle = 0;
+
+    //Setting the player indestructible using this variable
+    this.player.alpha = 0.5;
+
+    //Animate the ship and use a timer at the same time
+    var tween = this.tweens.add({
+      targets: this.player,
+      x: config.width/2,
+      y: config.height/2, //Move ship 64 pixels above the bottom of the screen
+      ease: 'Power1',
+      duration: 1500,
+      repeat: 0,
+      onComplete: function() {
+        this.player.alpha = 1; //Once tween is done, we remove the transparency
+      },
+      callbackScope: this
+    });
+  }
+
+  zeroPad(number, size) {
+    var stringNumber = String(number);
+    while(stringNumber.length < (size || 2)) {
+      stringNumber = "0" + stringNumber;
+    }
+    return stringNumber;
   }
 }

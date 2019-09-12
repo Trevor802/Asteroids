@@ -1,3 +1,5 @@
+var globalScore = 0;
+
 class LoadingScene extends Phaser.Scene {
   constructor() {
     super("bootGame");

@@ -201,19 +201,23 @@ var Asteroid = new Phaser.Class({
         switch (this.size) {
             case sizes.LARGE:
                 object.scene.score += 20;
-                object.scene.scoreLabel.text = "SCORE " + object.scene.score;
+                //object.scene.scoreLabel.text = "SCORE " + object.scene.score;
                 break;
             case sizes.MEDIUM:
                 object.scene.score += 50;
-                object.scene.scoreLabel.text = "SCORE " + object.scene.score;
+                //object.scene.scoreLabel.text = "SCORE " + object.scene.score;
                 break;
             case sizes.SMALL:
                 object.scene.score += 100;
-                object.scene.scoreLabel.text = "SCORE " + object.scene.score;
+                //object.scene.scoreLabel.text = "SCORE " + object.scene.score;
                 break;
               default:
                 break;
         }
+
+        var scoreFormatted = this.scene.zeroPad(this.scene.score, 6);
+        object.scene.scoreLabel.text = "SCORE " + scoreFormatted;
+        globalScore = scoreFormatted;
     },
 
     setIsChild: function (isChild) {
