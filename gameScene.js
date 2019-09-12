@@ -15,7 +15,7 @@ class GameScene extends Phaser.Scene {
     this.explodeAudio = this.sound.add('explodeAudio');
 
     //Creating PLayers
-    this.player = this.physics.add.sprite(config.width / 2 - 8, config.height - 64, "player");
+    this.player = this.physics.add.sprite(config.width / 2 - 8, config.height / 2 - 12, "player");
     this.player.play("thrust");
 
     //Ship Controls
