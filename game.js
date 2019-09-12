@@ -26,7 +26,8 @@ var gameSettings = {
   initialAsteroids: 1,
   asteroidWaveIncrease: 1,
   asteroidBreakNum: 2,
-  spawnDelay: 6000,
+  spawnDelay: 10000,
+  transitionPadding: 1000,
 }
 
 var game = new Phaser.Game(config);

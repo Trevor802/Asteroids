@@ -98,11 +98,20 @@ class GameScene extends Phaser.Scene {
     // Begin the next wave if all asteroids are gone
     if (this.asteroids.countActive(true) == 0) {
         if (this.waveResetTime > 0) {
-            if (this.waveResetTime > gameSettings.spawnDelay * 2/3) {
+            if (this.waveResetTime - gameSettings.transitionPadding > (gameSettings.spawnDelay -
+                gameSettings.transitionPadding) * 2/3) {
               this.clearedOutline.setVisible(true);
+              this.clearedOutline.setAlpha((1 - Math.abs((this.waveResetTime - gameSettings.transitionPadding) -
+                  (gameSettings.spawnDelay - gameSettings.transitionPadding) * 5/6) /
+                  ((gameSettings.spawnDelay - gameSettings.transitionPadding) / 6)) * 2);
               this.waveMessage.text = "WAVE CLEARED!";
-            } else if (this.waveResetTime < gameSettings.spawnDelay/3) {
+            } else if ((this.waveResetTime - gameSettings.transitionPadding) <
+                (gameSettings.spawnDelay - gameSettings.transitionPadding)/3 && this.waveResetTime >=
+                gameSettings.transitionPadding) {
               this.incomingOutline.setVisible(true);
+              this.incomingOutline.setAlpha((1 - Math.abs((this.waveResetTime - gameSettings.transitionPadding) -
+                  (gameSettings.spawnDelay - gameSettings.transitionPadding) / 6) /
+                  ((gameSettings.spawnDelay - gameSettings.transitionPadding) / 6)) * 2);
               this.clearedOutline.setVisible(false);
               this.waveMessage.text = this.asteroidSpawnNum + " INCOMING\nASTEROIDS DETECTED!";
             } else {
