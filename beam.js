@@ -8,6 +8,7 @@ class Beam extends Phaser.GameObjects.Sprite {
 
     this.angle = scene.player.angle;
     this.play("beam_anim");
+    this.lifetime = gameSettings.beamLifetime;
     scene.physics.world.enableBody(this);
 
     // if(this.angle >= -90 && this.angle <= 90) {
@@ -23,9 +24,10 @@ class Beam extends Phaser.GameObjects.Sprite {
     //this.beamSound.play();
   }
 
-  update() {
-    if(this.y < 0 || this.x < 0 || this.y > 600 || this.x > 800) {
-      this.destroy();
-    }
+  update(delta) {
+      this.lifetime -= delta;
+      if (this.lifetime < 0) {
+          this.destroy();
+      }
   }
 }

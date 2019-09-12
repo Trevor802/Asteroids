@@ -90,7 +90,7 @@ var Asteroid = new Phaser.Class({
 
                 object.scene.asteroids.killAndHide(this);
                 object.scene.asteroids.remove(this, true, true);
-                break;
+                return;
             }
         }
 
@@ -185,7 +185,6 @@ var Asteroid = new Phaser.Class({
 
         // Sync child animation with parent
         for (var i = 0; i < this.childAsteroids.length; i++) {
-            console.log(this.anims.currentAnim.index);
             this.childAsteroids[i].setFrame(this.anims.currentFrame.textureFrame);
         }
     },
