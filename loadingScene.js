@@ -8,8 +8,8 @@ class LoadingScene extends Phaser.Scene {
   preload() {
     //Load Images
     this.load.image("background", "assets/images/SpaceBackground0006.png");
-    this.load.image("wave_cleared", "assets/images/AllClearScanlines.png");
-    this.load.image("asteroids_incoming", "assets/images/WarningScanlines.png");
+    this.load.image("wave_cleared", "assets/images/AllClearScanlinesLarge.png");
+    this.load.image("asteroids_incoming", "assets/images/WarningScanlinesLarge.png");
     //this.load.spritesheet("player", "assets/spritesheets/player.png", {frameWidth: 16, frameHeight: 24});
     this.load.image("player", "assets/Images/SpaceShip_2.png");
 
