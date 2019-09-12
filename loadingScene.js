@@ -8,7 +8,9 @@ class LoadingScene extends Phaser.Scene {
     this.load.image("background", "assets/images/background.png");
     this.load.spritesheet("player", "assets/spritesheets/player.png", {frameWidth: 16, frameHeight: 24});
     this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
-    this.load.image('asteroid', 'assets/images/Asteroid.png');
+    this.load.spritesheet('asteroid_big', 'assets/spritesheets/Asteroid_01_Sheet.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('asteroid_medium', 'assets/spritesheets/Asteroid_02_Sheet.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('asteroid_small', 'assets/spritesheets/Asteroid_03_Sheet.png', { frameWidth: 16, frameHeight: 16 });
 
     //Load Title
     this.load.image("title", "assets/images/title2.png");
@@ -52,6 +54,27 @@ class LoadingScene extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("beam"),
       frameRate: 20,
       repeat: -1
+    });
+
+    this.anims.create({
+        key: "ast_big_anim",
+        frames: this.anims.generateFrameNumbers("asteroid_big"),
+        frameRate: 3,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: "ast_med_anim",
+        frames: this.anims.generateFrameNumbers("asteroid_medium"),
+        frameRate: 6,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: "ast_small_anim",
+        frames: this.anims.generateFrameNumbers("asteroid_small"),
+        frameRate: 12,
+        repeat: -1
     });
   }
 

@@ -29,7 +29,3 @@ var gameSettings = {
 }
 
 var game = new Phaser.Game(config);
-
-/*window.onload = function () {
-
-}*/
