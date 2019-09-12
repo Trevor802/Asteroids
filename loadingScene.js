@@ -1,3 +1,5 @@
+var globalScore = 0;
+
 class LoadingScene extends Phaser.Scene {
   constructor() {
     super("bootGame");
@@ -31,10 +33,7 @@ class LoadingScene extends Phaser.Scene {
 
     //Loading Background Music
     this.backgroundMusic = this.sound.add('bgm');
-    this.backgroundMusic.play({loop: true, volume: 10, rate: 1});
-
-    //Play Background Music
-    this.backgroundMusic.play();
+    this.backgroundMusic.play({loop: true, volume: 1, rate: 1});
 
     this.title = this.add.image(config.width/2, config.height/2, "title");
     this.title.setScale(0.8);

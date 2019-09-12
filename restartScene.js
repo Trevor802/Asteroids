@@ -8,6 +8,7 @@ class RestartScene extends Phaser.Scene {
     this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
     this.background.setOrigin(0, 0);
 
+    this.scoreTextLabel = this.add.bitmapText(config.width/2 - 240, config.height/2 - 150, "pixelFont", "YOUR SCORE IS " + globalScore, 64);
     this.title = this.add.image(config.width/2, config.height/2, "title");
     this.title.setScale(0.8);
     this.startScreenLabel = this.add.bitmapText(config.width/2 - 240, config.height/2 + 100 , "pixelFont", "PRESS ENTER TO START", 64);
