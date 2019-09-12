@@ -162,7 +162,7 @@ class GameScene extends Phaser.Scene {
       return;
     //this.lives -= 1;
     //this.livesLabel.text = "LIVES " + this.lives;
-    this.backgroundMusic.stop();
+    //this.backgroundMusic.stop();
     //this.scene.restart("playGame");
   }
 }
