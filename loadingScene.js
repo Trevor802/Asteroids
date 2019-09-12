@@ -8,7 +8,8 @@ class LoadingScene extends Phaser.Scene {
   preload() {
     //Load Images
     this.load.image("background", "assets/images/background.png");
-    this.load.spritesheet("player", "assets/spritesheets/player.png", {frameWidth: 16, frameHeight: 24});
+    //this.load.spritesheet("player", "assets/spritesheets/player.png", {frameWidth: 16, frameHeight: 24});
+    this.load.image("player", "assets/Images/SpaceShip_2.png");
     this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
     this.load.spritesheet('asteroid_big', 'assets/spritesheets/Asteroid_01_Sheet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('asteroid_medium', 'assets/spritesheets/Asteroid_02_Sheet.png', { frameWidth: 32, frameHeight: 32 });

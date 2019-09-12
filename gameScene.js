@@ -16,7 +16,7 @@ class GameScene extends Phaser.Scene {
 
     //Creating PLayers
     this.player = this.physics.add.sprite(config.width / 2, config.height/2, "player");
-    this.player.play("thrust");
+    //this.player.play("thrust");
 
     //Ship Controls
     this.cursorKeys = this.input.keyboard.createCursorKeys();
