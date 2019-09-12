@@ -22,11 +22,12 @@ var gameSettings = {
   shootRecoil: 0.1,
   beamSpeed: 250,
   beamLifetime: 1500,
-  terminalVelocity: 0.2,
+  terminalVelocity: 0.4,
   initialAsteroids: 1,
   asteroidWaveIncrease: 1,
   asteroidBreakNum: 2,
-  spawnDelay: 3000,
+  spawnDelay: 10000,
+  transitionPadding: 1000,
 }
 
 var game = new Phaser.Game(config);
