@@ -15,9 +15,9 @@ class LoadingScene extends Phaser.Scene {
 
     //Load spritesheets
     this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
-    this.load.spritesheet('asteroid_big', 'assets/spritesheets/Asteroid_01_Sheet.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('asteroid_medium', 'assets/spritesheets/Asteroid_02_Sheet.png', { frameWidth: 32, frameHeight: 32 });
-    this.load.spritesheet('asteroid_small', 'assets/spritesheets/Asteroid_03_Sheet.png', { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet('asteroid_big', 'assets/spritesheets/MoonAsteroid_01.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.spritesheet('asteroid_medium', 'assets/spritesheets/MoonAsteroid_02.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('asteroid_small', 'assets/spritesheets/MoonAsteroid_03.png', { frameWidth: 32, frameHeight: 32 });
 
     //Load Title
     this.load.image("title", "assets/images/title2.png");
