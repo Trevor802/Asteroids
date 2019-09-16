@@ -29,6 +29,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('shootAudio', 'assets/MissileFire.wav');
     this.load.audio('explodeAudio', 'assets/AsteroidExplode.wav');
     this.load.audio('bgm', 'assets/BackgroundMusic.m4a');
+    this.load.audio('waveClear', 'assets/Sounds/AllClear.wav');
+    this.load.audio('waveStart', 'assets/Sounds/IncomingAsteroids.mp3');
   }
 
   create() {
