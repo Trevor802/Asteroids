@@ -19,14 +19,14 @@ var gameSettings = {
   rotationSpeed: 5,
   playerAcceleration: 0,
   playerDeceleration: 0.000025,
-  shootRecoil: 0.1,
-  beamSpeed: 250,
-  beamLifetime: 1500,
+  shootRecoil: 0.35,
+  beamSpeed: 800,
+  beamLifetime: 500,
   terminalVelocity: 0.4,
   initialAsteroids: 1,
   asteroidWaveIncrease: 1,
   asteroidBreakNum: 2,
-  spawnDelay: 10000,
+  spawnDelay: 8000,
   transitionPadding: 1000,
 }
 
