@@ -91,6 +91,9 @@ class GameScene extends Phaser.Scene {
     //Shoot Beams
     if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
       if (this.spawning) {
+        if (this.introTime > gameSettings.introPadding) {
+          this.introTime = gameSettings.introPadding;
+        }
         return;
       }
       this.shoot();
