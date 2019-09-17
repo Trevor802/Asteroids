@@ -226,6 +226,7 @@ class GameScene extends Phaser.Scene {
         this.currentVelocity.x = 0;
         this.currentVelocity.y = 0;
         this.spawning = false;
+        this.player.alpha = 0.7;
         this.time.addEvent({
           delay: gameSettings.spawnInvulnerability,
           callback: this.makeVulnerable,
