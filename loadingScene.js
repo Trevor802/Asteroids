@@ -17,6 +17,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.spritesheet('asteroid_big', 'assets/spritesheets/MoonAsteroid_01.png', { frameWidth: 128, frameHeight: 128 });
     this.load.spritesheet('asteroid_medium', 'assets/spritesheets/MoonAsteroid_02.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('asteroid_small', 'assets/spritesheets/MoonAsteroid_03.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('explosion', 'assets/spritesheets/explosion.png', {frameWidth: 64, frameHeight: 64});
 
     //Load Title
     this.load.image("title", "assets/images/title2.png");
@@ -30,6 +31,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('bgm', 'assets/BackgroundMusic.m4a');
     this.load.audio('waveClear', 'assets/Sounds/AllClear.wav');
     this.load.audio('waveStart', 'assets/Sounds/IncomingAsteroids.mp3');
+    this.load.audio('playerExplosion', 'assets/sounds/explosion.mp3');
   }
 
   create() {

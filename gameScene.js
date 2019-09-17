@@ -17,6 +17,7 @@ class GameScene extends Phaser.Scene {
     this.waveClearedAudioPlayed = false;
     this.waveStartAudio = this.sound.add('waveStart');
     this.waveStartAudioPlayed = false;
+    this.playerExplosion = this.sound.add('playerExplosion');
 
     //Creating PLayers
     this.player = this.physics.add.sprite(config.width / 2, config.height/2, "player");
