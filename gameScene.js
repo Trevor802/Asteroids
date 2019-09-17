@@ -13,6 +13,10 @@ class GameScene extends Phaser.Scene {
     //Sounds
     this.shootAudio = this.sound.add('shootAudio');
     this.explodeAudio = this.sound.add('explodeAudio');
+    this.waveClearAudio = this.sound.add('waveClear');
+    this.waveClearedAudioPlayed = false;
+    this.waveStartAudio = this.sound.add('waveStart');
+    this.waveStartAudioPlayed = false;
 
     //Creating PLayers
     this.player = this.physics.add.sprite(config.width / 2, config.height/2, "player");
@@ -97,6 +101,10 @@ class GameScene extends Phaser.Scene {
 
     // Begin the next wave if all asteroids are gone
     if (this.asteroids.countActive(true) == 0) {
+      if (!this.waveClearedAudioPlayed){
+        this.waveClearAudio.play();
+        this.waveClearedAudioPlayed = true;
+      }
         if (this.waveResetTime > 0) {
             if (this.waveResetTime - gameSettings.transitionPadding > (gameSettings.spawnDelay -
                 gameSettings.transitionPadding) * 2/3) {
@@ -108,6 +116,10 @@ class GameScene extends Phaser.Scene {
             } else if ((this.waveResetTime - gameSettings.transitionPadding) <
                 (gameSettings.spawnDelay - gameSettings.transitionPadding)/3 && this.waveResetTime >=
                 gameSettings.transitionPadding) {
+              if (!this.waveStartAudioPlayed){
+                this.waveStartAudio.play();
+                this.waveStartAudioPlayed = true;
+              }
               this.incomingOutline.setVisible(true);
               this.incomingOutline.setAlpha((1 - Math.abs((this.waveResetTime - gameSettings.transitionPadding) -
                   (gameSettings.spawnDelay - gameSettings.transitionPadding) / 6) /
@@ -126,6 +138,9 @@ class GameScene extends Phaser.Scene {
           this.clearedOutline.setVisible(false);
           this.waveMessage.text = "";
         }
+
+        this.waveClearedAudioPlayed = false;
+        this.waveStartAudioPlayed = false;
 
         this.waveResetTime = gameSettings.spawnDelay;
 
