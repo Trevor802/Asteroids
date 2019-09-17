@@ -10,7 +10,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image("background", "assets/images/background.png");
     this.load.image("wave_cleared", "assets/images/AllClearScanlinesLarge.png");
     this.load.image("asteroids_incoming", "assets/images/WarningScanlinesLarge.png");
-    this.load.image("player", "assets/Images/SpaceShip_2.png");
+    this.load.image("player", "assets/Images/SpaceShip.png");
 
     //Load spritesheets
     //this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
