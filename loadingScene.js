@@ -13,7 +13,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image("player", "assets/Images/SpaceShip_2.png");
 
     //Load spritesheets
-    this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
+    //this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
     this.load.spritesheet('asteroid_big', 'assets/spritesheets/MoonAsteroid_01.png', { frameWidth: 128, frameHeight: 128 });
     this.load.spritesheet('asteroid_medium', 'assets/spritesheets/MoonAsteroid_02.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('asteroid_small', 'assets/spritesheets/MoonAsteroid_03.png', { frameWidth: 32, frameHeight: 32 });
@@ -21,6 +21,7 @@ class LoadingScene extends Phaser.Scene {
 
     //Load Title
     this.load.image("title", "assets/images/title2.png");
+    this.load.image("beam", "assets/images/beam.png");
 
     //Load Font
     this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");

@@ -4,10 +4,11 @@ class Beam extends Phaser.GameObjects.Sprite {
     var y = scene.player.y;
 
     super(scene, x, y, "beam");
+    this.setScale(0.5);
     scene.add.existing(this);
 
     this.angle = scene.player.angle;
-    this.play("beam_anim");
+    //this.play("beam_anim");
     this.lifetime = gameSettings.beamLifetime;
     scene.physics.world.enableBody(this);
 
