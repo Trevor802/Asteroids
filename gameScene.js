@@ -19,8 +19,9 @@ class GameScene extends Phaser.Scene {
     this.waveStartAudioPlayed = false;
     this.playerExplosion = this.sound.add('playerExplosion');
 
-    //Creating PLayers
+    //Creating player
     this.player = this.physics.add.sprite(config.width / 2, config.height/2, "player");
+    this.player.alpha = 0;
     //this.player.play("thrust");
 
     //Ship Controls
@@ -48,7 +49,7 @@ class GameScene extends Phaser.Scene {
     this.score = 0;
 
     //Wave messages
-    this.waveMessage = this.add.bitmapText(config.width / 2, config.height / 2, "pixelFont", "WAVE CLEARED!", 32);
+    this.waveMessage = this.add.bitmapText(config.width / 2, config.height / 2, "pixelFont", "", 32);
     this.waveMessage.setOrigin(0.5, 0.5);
     this.waveMessage.setCenterAlign();
     this.waveMessage.setDepth(100);
@@ -66,8 +67,11 @@ class GameScene extends Phaser.Scene {
     this.lives = 3;
 
     //Game state
-    this.spawning = false;
+    this.spawning = true;
     this.waveResetTime = 0;
+
+    //Starting intro
+    this.introTime = gameSettings.introDelay;
   }
 
   update(time, delta) {
@@ -84,8 +88,8 @@ class GameScene extends Phaser.Scene {
     //Phaser.Math.wrap(this.player.x, 0, config.width);
 
     //Shoot Beams
-    if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      if(this.spawning) {
+    if (Phaser.Input.Keyboard.JustDown(this.spacebar)) {
+      if (this.spawning) {
         return;
       }
       this.shoot();
@@ -99,64 +103,17 @@ class GameScene extends Phaser.Scene {
 
     // Move all the asteroids
     for (var i = 0; i < this.asteroids.getChildren().length; i++) {
-        this.asteroids.getChildren()[i].move(delta, { scene: this });
+      this.asteroids.getChildren()[i].move(delta, {scene: this});
+    }
+
+    if (this.introTime > 0) {
+      this.playIntro(delta);
+      return;
     }
 
     // Begin the next wave if all asteroids are gone
     if (this.asteroids.countActive(true) == 0) {
-      if (!this.waveClearedAudioPlayed){
-        this.waveClearAudio.play();
-        this.waveClearedAudioPlayed = true;
-      }
-        if (this.waveResetTime > 0) {
-            if (this.waveResetTime - gameSettings.transitionPadding > (gameSettings.spawnDelay -
-                gameSettings.transitionPadding) * 2/3) {
-              this.clearedOutline.setVisible(true);
-              this.clearedOutline.setAlpha((1 - Math.abs((this.waveResetTime - gameSettings.transitionPadding) -
-                  (gameSettings.spawnDelay - gameSettings.transitionPadding) * 5/6) /
-                  ((gameSettings.spawnDelay - gameSettings.transitionPadding) / 6)) * 2);
-              this.waveMessage.text = "WAVE CLEARED!";
-            } else if ((this.waveResetTime - gameSettings.transitionPadding) <
-                (gameSettings.spawnDelay - gameSettings.transitionPadding)/3 && this.waveResetTime >=
-                gameSettings.transitionPadding) {
-              if (!this.waveStartAudioPlayed){
-                this.waveStartAudio.play();
-                this.waveStartAudioPlayed = true;
-              }
-              this.incomingOutline.setVisible(true);
-              this.incomingOutline.setAlpha((1 - Math.abs((this.waveResetTime - gameSettings.transitionPadding) -
-                  (gameSettings.spawnDelay - gameSettings.transitionPadding) / 6) /
-                  ((gameSettings.spawnDelay - gameSettings.transitionPadding) / 6)) * 2);
-              this.clearedOutline.setVisible(false);
-              this.waveMessage.text = this.asteroidSpawnNum + " INCOMING\nASTEROIDS DETECTED!";
-            } else {
-              this.clearedOutline.setVisible(false);
-              this.waveMessage.text = "";
-            }
-
-            this.waveResetTime -= delta;
-            return;
-        } else {
-          this.incomingOutline.setVisible(false);
-          this.clearedOutline.setVisible(false);
-          this.waveMessage.text = "";
-        }
-
-        this.waveClearedAudioPlayed = false;
-        this.waveStartAudioPlayed = false;
-
-        this.waveResetTime = gameSettings.spawnDelay;
-
-        // Clear out inactive asteroids, remove them from the scene and destroy them
-        this.asteroids.clear(true, true);
-
-        // Spawn new asteroids
-        for (i = 0; i < this.asteroidSpawnNum; i++) {
-            this.asteroids.add(new Asteroid(this, -1, -1, sizes.LARGE), true);
-        }
-
-        // Make next wave spawn more asteroids than this one
-        this.asteroidSpawnNum += gameSettings.asteroidWaveIncrease;
+      this.beginNextWave(delta);
     }
   }
 
@@ -278,6 +235,98 @@ class GameScene extends Phaser.Scene {
       },
       callbackScope: this
     });
+  }
+
+  beginNextWave(delta) {
+      if (!this.waveClearedAudioPlayed){
+        this.waveClearAudio.play();
+        this.waveClearedAudioPlayed = true;
+      }
+      if (this.waveResetTime > 0) {
+        if (this.waveResetTime - gameSettings.transitionPadding > (gameSettings.spawnDelay -
+            gameSettings.transitionPadding) * 2/3) {
+          this.clearedOutline.setVisible(true);
+          this.clearedOutline.setAlpha((1 - Math.abs((this.waveResetTime - gameSettings.transitionPadding) -
+              (gameSettings.spawnDelay - gameSettings.transitionPadding) * 5/6) /
+              ((gameSettings.spawnDelay - gameSettings.transitionPadding) / 6)) * 2);
+          this.waveMessage.text = "WAVE CLEARED!";
+        } else if ((this.waveResetTime - gameSettings.transitionPadding) <
+            (gameSettings.spawnDelay - gameSettings.transitionPadding)/3 && this.waveResetTime >=
+            gameSettings.transitionPadding) {
+          if (!this.waveStartAudioPlayed){
+            this.waveStartAudio.play();
+            this.waveStartAudioPlayed = true;
+          }
+          this.incomingOutline.setVisible(true);
+          this.incomingOutline.setAlpha((1 - Math.abs((this.waveResetTime - gameSettings.transitionPadding) -
+              (gameSettings.spawnDelay - gameSettings.transitionPadding) / 6) /
+              ((gameSettings.spawnDelay - gameSettings.transitionPadding) / 6)) * 2);
+          this.clearedOutline.setVisible(false);
+          this.waveMessage.text = this.asteroidSpawnNum + " INCOMING\nASTEROIDS DETECTED!";
+        } else {
+          this.clearedOutline.setVisible(false);
+          this.waveMessage.text = "";
+        }
+
+        this.waveResetTime -= delta;
+        return;
+      } else {
+        this.incomingOutline.setVisible(false);
+        this.clearedOutline.setVisible(false);
+        this.waveMessage.text = "";
+      }
+
+      this.waveClearedAudioPlayed = false;
+      this.waveStartAudioPlayed = false;
+
+      this.waveResetTime = gameSettings.spawnDelay;
+
+      // Clear out inactive asteroids, remove them from the scene and destroy them
+      this.asteroids.clear(true, true);
+
+      // Spawn new asteroids
+      for (var i = 0; i < this.asteroidSpawnNum; i++) {
+        this.asteroids.add(new Asteroid(this, -1, -1, sizes.LARGE), true);
+      }
+
+      // Make next wave spawn more asteroids than this one
+      this.asteroidSpawnNum += gameSettings.asteroidWaveIncrease;
+  }
+
+  playIntro(delta) {
+    if (this.introTime - gameSettings.introPadding > 0) {
+      if (!this.waveStartAudioPlayed){
+        this.waveStartAudio.play();
+        this.waveStartAudioPlayed = true;
+      }
+
+      this.incomingOutline.setVisible(true);
+      this.incomingOutline.setAlpha((1 - Math.abs((this.introTime - gameSettings.introPadding) -
+          (gameSettings.introDelay - gameSettings.introPadding) / 2) /
+          ((gameSettings.spawnDelay - gameSettings.introPadding) / 2)) * 2);
+      this.clearedOutline.setVisible(false);
+      if (this.introTime < gameSettings.introDelay - gameSettings.introPadding) {
+        var introText = "FORWARD THRUSTERS: FATAL ERROR!\nSEVERE DAMAGE DETECTED\n\nMOUNTED BLASTER: " +
+            "OPERATIONAL\n\nWARNING: ASTEROID DETECTED!";
+        if (this.waveMessage.text != introText) {
+          this.waveMessage.text += introText[this.waveMessage.text.length];
+        }
+      }
+    } else {
+      this.incomingOutline.setVisible(false);
+      this.waveMessage.text = "";
+    }
+
+    if (this.introTime >= gameSettings.introPadding && this.introTime - delta < gameSettings.introPadding) {
+      this.time.addEvent({
+        delay: 0,
+        callback: this.resetPlayer,
+        callbackScope: this,
+        loop: false
+      });
+    }
+
+    this.introTime -= delta;
   }
 
   makeVulnerable() {

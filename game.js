@@ -27,7 +27,9 @@ var gameSettings = {
   asteroidWaveIncrease: 1,
   asteroidBreakNum: 2,
   spawnDelay: 8000,
+  introDelay: 10000,
   transitionPadding: 1000,
+  introPadding: 2000,
   spawnInvulnerability: 1500,
 }
 
