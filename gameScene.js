@@ -10,6 +10,17 @@ class GameScene extends Phaser.Scene {
     this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
     this.background.setOrigin(0, 0);
 
+
+    this.leftBtnNormal = this.add.image(100, 100, "left_normal");
+    this.leftBtnPressed = this.add.image(100, 100, "left_pressed");
+    this.leftBtnPressed.setVisible(false);
+    this.rightBtnNormal = this.add.image(200, 100, "right_normal");
+    this.rightBtnPressed = this.add.image(200, 100, "right_pressed");
+    this.rightBtnPressed.setVisible(false);
+    this.fireBtnNormal = this.add.image(1000, 100, "fire_normal");
+    this.fireBtnPressed = this.add.image(1000, 100, "fire_pressed");
+    this.fireBtnPressed.setVisible(false);
+
     //Sounds
     this.shootAudio = this.sound.add('shootAudio');
     this.explodeAudio = this.sound.add('explodeAudio');
@@ -96,7 +107,23 @@ class GameScene extends Phaser.Scene {
         }
         return;
       }
+      this.fireBtnPressed.setVisible(true);
       this.shoot();
+    }
+    if (Phaser.Input.Keyboard.JustUp(this.spacebar)){
+      this.fireBtnPressed.setVisible(false);
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.cursorKeys.left)){
+      this.leftBtnPressed.setVisible(true);
+    }
+    if (Phaser.Input.Keyboard.JustUp(this.cursorKeys.left)){
+      this.leftBtnPressed.setVisible(false);
+    }
+    if (Phaser.Input.Keyboard.JustDown(this.cursorKeys.right)){
+      this.rightBtnPressed.setVisible(true);
+    }
+    if (Phaser.Input.Keyboard.JustUp(this.cursorKeys.right)){
+      this.rightBtnPressed.setVisible(false);
     }
 
     //Deleting the beam objects
