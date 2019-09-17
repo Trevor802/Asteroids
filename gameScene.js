@@ -21,6 +21,7 @@ class GameScene extends Phaser.Scene {
 
     //Creating player
     this.player = this.physics.add.sprite(config.width / 2, config.height/2, "player");
+    this.player.depth = 50;
     this.player.alpha = 0;
     //this.player.play("thrust");
 
