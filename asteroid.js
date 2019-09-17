@@ -19,18 +19,24 @@ var Asteroid = new Phaser.Class({
         switch (size) {
             case sizes.LARGE:
                 this.setTexture('asteroid_big');
-                this.play("ast_big_anim");
+                //this.play("ast_big_anim");
                 this.speed = 0.05;
+                this.angle = 360 * Math.random();
+                this.spinSpeed = 0.025 * Math.random() - 0.0125;
                 break;
             case sizes.MEDIUM:
                 this.setTexture('asteroid_medium');
-                this.play("ast_med_anim");
+                //this.play("ast_med_anim");
                 this.speed = 0.05 + 0.05 * Math.random();
+                this.angle = 360 * Math.random();
+                this.spinSpeed = 0.2 * Math.random() - 0.1;
                 break;
             case sizes.SMALL:
                 this.setTexture('asteroid_small');
-                this.play("ast_small_anim");
+                //this.play("ast_small_anim");
                 this.speed = 0.05 + 0.15 * Math.random();
+                this.angle = 360 * Math.random();
+                this.spinSpeed = 0.8 * Math.random() - 0.4;
                 break;
         }
 
@@ -100,6 +106,8 @@ var Asteroid = new Phaser.Class({
         var y = Phaser.Math.Wrap(this.y + delta * this.speed * this.direction.y,
             0, config.height);
         this.setPosition(x, y);
+
+        this.angle += delta * this.spinSpeed;
 
         // Add "child asteroids" to this asteroid. To the player it just looks like one asteroid
         // wrapping around the screen.
@@ -183,9 +191,11 @@ var Asteroid = new Phaser.Class({
             this.childAsteroids.pop();
         }
 
-        // Sync child animation with parent
+        // Sync child rotation with parent
         for (var i = 0; i < this.childAsteroids.length; i++) {
-            this.childAsteroids[i].setFrame(this.anims.currentFrame.textureFrame);
+            //this.childAsteroids[i].setFrame(this.anims.currentFrame.textureFrame);
+            this.childAsteroids[i].angle = this.angle;
+            this.childAsteroids[i].spinSpeed = this.spinSpeed;
         }
     },
 
