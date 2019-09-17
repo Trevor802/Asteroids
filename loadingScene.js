@@ -1,4 +1,4 @@
-var globalScore = 0;
+var globalScore = "000000";
 
 class LoadingScene extends Phaser.Scene {
   constructor() {
@@ -10,7 +10,6 @@ class LoadingScene extends Phaser.Scene {
     this.load.image("background", "assets/images/SpaceBackground0006.png");
     this.load.image("wave_cleared", "assets/images/AllClearScanlinesLarge.png");
     this.load.image("asteroids_incoming", "assets/images/WarningScanlinesLarge.png");
-    //this.load.spritesheet("player", "assets/spritesheets/player.png", {frameWidth: 16, frameHeight: 24});
     this.load.image("player", "assets/Images/SpaceShip_2.png");
 
     //Load spritesheets
@@ -18,6 +17,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.spritesheet('asteroid_big', 'assets/spritesheets/Asteroid_01_Sheet.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('asteroid_medium', 'assets/spritesheets/Asteroid_02_Sheet.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('asteroid_small', 'assets/spritesheets/Asteroid_03_Sheet.png', { frameWidth: 16, frameHeight: 16 });
+    this.load.spritesheet("explosion", "assets/spritesheets/explosion.png", {frameWidth: 64, frameHeight: 64});
 
     //Load Title
     this.load.image("title", "assets/images/title2.png");
@@ -79,6 +79,14 @@ class LoadingScene extends Phaser.Scene {
         frames: this.anims.generateFrameNumbers("asteroid_small"),
         frameRate: 12,
         repeat: -1
+    });
+
+    this.anims.create({
+      key: "explode",
+      frames: this.anims.generateFrameNumbers("explosion"),
+      frameRate: 20,
+      repeat: 0, //Run only once
+      hideOnComplete: true //Disappear once done
     });
   }
 

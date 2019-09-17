@@ -208,8 +208,10 @@ class GameScene extends Phaser.Scene {
       return;
     }
 
+    var explosion = new Explosion(this, player.x, player.y);
     this.lives -= 1;
     this.livesLabel.text = "LIVES  " + this.lives;
+
 
     this.player.disableBody(true, true);
 
@@ -240,7 +242,7 @@ class GameScene extends Phaser.Scene {
     var tween = this.tweens.add({
       targets: this.player,
       x: config.width/2,
-      y: config.height/2, //Move ship 64 pixels above the bottom of the screen
+      y: config.height/2,
       ease: 'Power1',
       duration: 1500,
       repeat: 0,
