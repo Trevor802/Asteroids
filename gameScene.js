@@ -65,6 +65,8 @@ class GameScene extends Phaser.Scene {
     this.livesLabel.setDepth(100);
     this.lives = 3;
 
+    //Game state
+    this.spawning = false;
     this.waveResetTime = 0;
   }
 
@@ -83,7 +85,7 @@ class GameScene extends Phaser.Scene {
 
     //Shoot Beams
     if(Phaser.Input.Keyboard.JustDown(this.spacebar)) {
-      if(this.player.alpha < 1) {
+      if(this.spawning) {
         return;
       }
       this.shoot();
@@ -253,6 +255,7 @@ class GameScene extends Phaser.Scene {
 
     //Setting the player indestructible using this variable
     this.player.alpha = 0.5;
+    this.spawning = true;
 
     //Animate the ship and use a timer at the same time
     var tween = this.tweens.add({
@@ -263,12 +266,22 @@ class GameScene extends Phaser.Scene {
       duration: 1500,
       repeat: 0,
       onComplete: function() {
-        this.player.alpha = 1; //Once tween is done, we remove the transparency
         this.currentVelocity.x = 0;
         this.currentVelocity.y = 0;
+        this.spawning = false;
+        this.time.addEvent({
+          delay: gameSettings.spawnInvulnerability,
+          callback: this.makeVulnerable,
+          callbackScope: this,
+          loop: false
+        });
       },
       callbackScope: this
     });
+  }
+
+  makeVulnerable() {
+    this.player.alpha = 1;
   }
 
   zeroPad(number, size) {
