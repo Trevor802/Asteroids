@@ -31,6 +31,7 @@ var gameSettings = {
   transitionPadding: 1000,
   introPadding: 2000,
   spawnInvulnerability: 1500,
+  smokeOffset: 30
 }
 
 var game = new Phaser.Game(config);

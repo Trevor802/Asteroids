@@ -21,7 +21,8 @@ class Beam extends Phaser.GameObjects.Sprite {
     // }
     this.body.velocity.x = gameSettings.beamSpeed * Math.cos((this.angle - 90) * Math.PI / 180);
     this.body.velocity.y = gameSettings.beamSpeed * Math.sin((this.angle - 90) * Math.PI / 180);
-
+    new Smoke(scene, x + gameSettings.smokeOffset * Math.cos((this.angle - 90) * Math.PI / 180),
+        y + gameSettings.smokeOffset * Math.sin((this.angle - 90) * Math.PI / 180), this.angle);
     //this.beamSound.play();
   }
 

@@ -18,6 +18,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.spritesheet('asteroid_medium', 'assets/spritesheets/MoonAsteroid_02.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('asteroid_small', 'assets/spritesheets/MoonAsteroid_03.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/spritesheets/explosion.png', {frameWidth: 64, frameHeight: 64});
+    this.load.spritesheet('smoke', 'assets/spritesheets/recoil_smoke.png', {frameWidth: 64, frameHeight: 64});
 
     //Load Title
     this.load.image("title", "assets/images/title2.png");
@@ -88,6 +89,14 @@ class LoadingScene extends Phaser.Scene {
     this.anims.create({
       key: "explode",
       frames: this.anims.generateFrameNumbers("explosion"),
+      frameRate: 20,
+      repeat: 0, //Run only once
+      hideOnComplete: true //Disappear once done
+    });
+
+    this.anims.create({
+      key: "smoke",
+      frames: this.anims.generateFrameNumbers("smoke"),
       frameRate: 20,
       repeat: 0, //Run only once
       hideOnComplete: true //Disappear once done

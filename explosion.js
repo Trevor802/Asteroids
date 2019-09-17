@@ -8,3 +8,13 @@ class Explosion extends Phaser.GameObjects.Sprite {
     this.play("explode");
   }
 }
+
+class Smoke extends Phaser.GameObjects.Sprite {
+  constructor(scene, x, y, angle = 0) {
+    super(scene, x, y, "smoke");
+    scene.add.existing(this);
+    this.angle = angle;
+    this.setScale(1);
+    this.play("smoke");
+  }
+}
