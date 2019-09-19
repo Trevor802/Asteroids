@@ -10,14 +10,14 @@ class LoadingScene extends Phaser.Scene {
     this.load.image("background", "assets/images/background.png");
     this.load.image("wave_cleared", "assets/images/AllClearScanlinesLarge.png");
     this.load.image("asteroids_incoming", "assets/images/WarningScanlinesLarge.png");
-    this.load.image("player", "assets/Images/SpaceShip.png");
-    this.load.image("left_normal", "assets/Images/LeftArrowUnpressed.png");
-    this.load.image("left_pressed", "assets/Images/LeftArrowPressed.png");
-    this.load.image("right_normal", "assets/Images/RightArrowUnpressed.png");
-    this.load.image("right_pressed", "assets/Images/RightArrowPressed.png");
-    this.load.image("fire_normal", "assets/Images/FireUnpressed.png");
-    this.load.image("fire_pressed", "assets/Images/FirePressed.png");
-    this.load.image("frame", "assets/Images/Cockpit.png");
+    this.load.image("player", "assets/images/SpaceShip.png");
+    this.load.image("left_normal", "assets/images/LeftArrowUnpressed.png");
+    this.load.image("left_pressed", "assets/images/LeftArrowPressed.png");
+    this.load.image("right_normal", "assets/images/RightArrowUnpressed.png");
+    this.load.image("right_pressed", "assets/images/RightArrowPressed.png");
+    this.load.image("fire_normal", "assets/images/FireUnpressed.png");
+    this.load.image("fire_pressed", "assets/images/FirePressed.png");
+    this.load.image("frame", "assets/images/Cockpit.png");
 
     //Load spritesheets
     //this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
@@ -41,8 +41,8 @@ class LoadingScene extends Phaser.Scene {
     this.load.audio('shootAudio', 'assets/MissileFire.wav');
     this.load.audio('explodeAudio', 'assets/AsteroidExplode.wav');
     this.load.audio('bgm', 'assets/BackgroundMusic.m4a');
-    this.load.audio('waveClear', 'assets/Sounds/AllClear.wav');
-    this.load.audio('waveStart', 'assets/Sounds/IncomingAsteroids.mp3');
+    this.load.audio('waveClear', 'assets/sounds/AllClear.wav');
+    this.load.audio('waveStart', 'assets/sounds/IncomingAsteroids.mp3');
     this.load.audio('playerExplosion', 'assets/sounds/explosion.mp3');
   }
 
