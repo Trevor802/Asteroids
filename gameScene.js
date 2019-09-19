@@ -116,7 +116,8 @@ class GameScene extends Phaser.Scene {
     this.player.body.velocity.x = 0;
     this.player.body.velocity.y = 0;
     this.movePlayerManager(delta);
-    this.physics.world.wrap(this.player, 0);
+    if (!this.spawning)
+      this.physics.world.wrap(this.player, 0);
     this.physics.world.wrapArray(this.projectiles.getChildren(), 0);
 
     //Phaser.Math.wrap(this.player.x, 0, config.width);
@@ -259,7 +260,7 @@ class GameScene extends Phaser.Scene {
 
   resetPlayer() {
     var x = config.width / 2;
-    var y = config.height / 2 + gameSettings.screenHeight / 2 - 1; //Hidden at the bottom of the screen
+    var y = config.height / 2 + gameSettings.screenHeight / 2 + this.player.height; //Hidden at the bottom of the screen
     this.player.enableBody(true, x, y, true, true);
     this.player.angle = 0;
 
