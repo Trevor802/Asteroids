@@ -42,29 +42,28 @@ var Asteroid = new Phaser.Class({
 
         this.childAsteroids = [];
         // Randomly place the asteroid at the border of the screen
-        // TODO: Replace hard-coded screen bounds
         if (posX == -1 && posY == -1) {
-            posX += scene.origin.x;
-            posY += scene.origin.y;
+            posX = scene.origin.x;
+            posY = scene.origin.y;
             var perimeter = 2 * (gameSettings.screenWidth - this.displayWidth) + 2 * 
             (gameSettings.screenHeight - this.displayHeight);
             var placement = perimeter * Math.random();
             if (placement < 2 * (gameSettings.screenWidth - this.displayWidth)) {
                 if (placement < (gameSettings.screenWidth - this.displayWidth)) {
-                    posX = placement + this.displayWidth / 2;
-                    posY = this.displayHeight / 2;
+                    posX += placement + this.displayWidth / 2;
+                    posY += this.displayHeight / 2;
                 } else {
-                    posX = placement - (gameSettings.screenWidth - this.displayWidth / 2);
-                    posY = (gameSettings.screenHeight - this.displayHeight / 2);
+                    posX += placement - (gameSettings.screenWidth - this.displayWidth / 2);
+                    posY += (gameSettings.screenHeight - this.displayHeight / 2);
                 }
             } else {
-                placement -= 2 * (gameSettings.screenWidth - this.displayWidth);
+                placement -= 2 * (gameSettings.screenHeight - this.displayHeight);
                 if (placement < (gameSettings.screenHeight - this.displayHeight)) {
-                    posX = this.displayWidth / 2;
-                    posY = placement + this.displayHeight / 2;
+                    posX += this.displayWidth / 2;
+                    posY += placement + this.displayHeight / 2;
                 } else {
-                    posX = (gameSettings.screenWidth - this.displayWidth / 2);
-                    posY = placement - (gameSettings.screenHeight - this.displayHeight / 2);
+                    posX += (gameSettings.screenWidth - this.displayWidth / 2);
+                    posY += placement - (gameSettings.screenHeight - this.displayHeight / 2);
                 }
             }
         }

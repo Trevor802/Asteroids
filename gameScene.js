@@ -88,9 +88,11 @@ class GameScene extends Phaser.Scene {
     //Wave outlines
     this.clearedOutline = this.add.image(config.width / 2, config.height / 2, "wave_cleared");
     this.clearedOutline.setVisible(false);
+    this.clearedOutline.setDepth(75);
 
     this.incomingOutline = this.add.image(config.width / 2, config.height / 2, "asteroids_incoming");
     this.incomingOutline.setVisible(false);
+    this.incomingOutline.setDepth(75);
 
     //Lives
     this.livesLabel = this.add.bitmapText(this.origin.x + gameSettings.screenWidth - 100, 
@@ -257,7 +259,7 @@ class GameScene extends Phaser.Scene {
 
   resetPlayer() {
     var x = config.width / 2;
-    var y = -8; //Hidden at the bottom of the screen
+    var y = config.height / 2 + gameSettings.screenHeight / 2 - 1; //Hidden at the bottom of the screen
     this.player.enableBody(true, x, y, true, true);
     this.player.angle = 0;
 
