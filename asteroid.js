@@ -18,22 +18,32 @@ var Asteroid = new Phaser.Class({
         // Smaller asteroids vary more in speed and can move faster.
         switch (size) {
             case sizes.LARGE:
-                this.setTexture('asteroid_big');
-                //this.play("ast_big_anim");
+                var random = Math.random();
+                if (random < 1 / 3)
+                    this.setTexture('asteroid_big_1');
+                else if (random < 2 / 3)
+                    this.setTexture('asteroid_big_2');
+                else
+                    this.setTexture('asteroid_big_3');
+
                 this.speed = 0.05;
                 this.angle = 360 * Math.random();
                 this.spinSpeed = 0.025 * Math.random() - 0.0125;
                 break;
             case sizes.MEDIUM:
-                this.setTexture('asteroid_medium');
-                //this.play("ast_med_anim");
+                var random = Math.random();
+                if (random < 1 / 2)
+                    this.setTexture('asteroid_medium_1');
+                else
+                    this.setTexture('asteroid_medium_2');
+
                 this.speed = 0.05 + 0.05 * Math.random();
                 this.angle = 360 * Math.random();
                 this.spinSpeed = 0.2 * Math.random() - 0.1;
                 break;
             case sizes.SMALL:
                 this.setTexture('asteroid_small');
-                //this.play("ast_small_anim");
+
                 this.speed = 0.05 + 0.15 * Math.random();
                 this.angle = 360 * Math.random();
                 this.spinSpeed = 0.8 * Math.random() - 0.4;
@@ -197,7 +207,6 @@ var Asteroid = new Phaser.Class({
 
         // Sync child rotation with parent
         for (var i = 0; i < this.childAsteroids.length; i++) {
-            //this.childAsteroids[i].setFrame(this.anims.currentFrame.textureFrame);
             this.childAsteroids[i].angle = this.angle;
             this.childAsteroids[i].spinSpeed = this.spinSpeed;
         }
@@ -212,7 +221,6 @@ var Asteroid = new Phaser.Class({
         }
         object.scene.explodeAudio.play();
         // Kill the current asteroid
-        // TODO: Play death animation before hiding
         asteroids.killAndHide(this);
         for (var j = 0; j < this.childAsteroids.length; j++) {
             object.scene.asteroids.killAndHide(this.childAsteroids[j]);
@@ -222,15 +230,12 @@ var Asteroid = new Phaser.Class({
         switch (this.size) {
             case sizes.LARGE:
                 object.scene.score += 20;
-                //object.scene.scoreLabel.text = "SCORE " + object.scene.score;
                 break;
             case sizes.MEDIUM:
                 object.scene.score += 50;
-                //object.scene.scoreLabel.text = "SCORE " + object.scene.score;
                 break;
             case sizes.SMALL:
                 object.scene.score += 100;
-                //object.scene.scoreLabel.text = "SCORE " + object.scene.score;
                 break;
               default:
                 break;

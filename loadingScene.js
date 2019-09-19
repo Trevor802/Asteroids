@@ -21,9 +21,12 @@ class LoadingScene extends Phaser.Scene {
 
     //Load spritesheets
     //this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
-    this.load.spritesheet('asteroid_big', 'assets/spritesheets/MoonAsteroid_01.png', { frameWidth: 128, frameHeight: 128 });
-    this.load.spritesheet('asteroid_medium', 'assets/spritesheets/MoonAsteroid_02.png', { frameWidth: 64, frameHeight: 64 });
-    this.load.spritesheet('asteroid_small', 'assets/spritesheets/MoonAsteroid_03.png', { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet('asteroid_big_1', 'assets/images/asteroid1.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.spritesheet('asteroid_big_2', 'assets/images/asteroid2.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.spritesheet('asteroid_big_3', 'assets/images/asteroid3.png', { frameWidth: 128, frameHeight: 128 });
+    this.load.spritesheet('asteroid_medium_1', 'assets/images/asteroid4.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('asteroid_medium_2', 'assets/images/asteroid5.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('asteroid_small', 'assets/images/asteroid6.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/spritesheets/explosion.png', {frameWidth: 64, frameHeight: 64});
     this.load.spritesheet('smoke', 'assets/spritesheets/recoil_smoke.png', {frameWidth: 64, frameHeight: 64});
 
@@ -82,27 +85,6 @@ class LoadingScene extends Phaser.Scene {
       frames: this.anims.generateFrameNumbers("beam"),
       frameRate: 20,
       repeat: -1
-    });
-
-    this.anims.create({
-        key: "ast_big_anim",
-        frames: this.anims.generateFrameNumbers("asteroid_big"),
-        frameRate: 3,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: "ast_med_anim",
-        frames: this.anims.generateFrameNumbers("asteroid_medium"),
-        frameRate: 6,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: "ast_small_anim",
-        frames: this.anims.generateFrameNumbers("asteroid_small"),
-        frameRate: 12,
-        repeat: -1
     });
 
     this.anims.create({
