@@ -10,15 +10,34 @@ class GameScene extends Phaser.Scene {
     this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
     this.background.setOrigin(0, 0);
 
+    this.frame = this.add.image(0, 0, "frame");
+    this.frame.setOrigin(0, 0);
+    this.frame.setDepth(10000);
 
-    this.leftBtnNormal = this.add.image(100, 100, "left_normal");
-    this.leftBtnPressed = this.add.image(100, 100, "left_pressed");
+    this.origin = {
+      x: (config.width - gameSettings.screenWidth) / 2, 
+      y: (config.height - gameSettings.screenHeight) / 2 
+    };
+
+    this.physics.world.bounds.x = this.origin.x;
+    this.physics.world.bounds.y = this.origin.y;
+    this.physics.world.bounds.width = gameSettings.screenWidth;
+    this.physics.world.bounds.height = gameSettings.screenHeight;
+
+    this.leftBtnNormal = this.add.image(650, 985, "left_normal");
+    this.leftBtnNormal.setDepth(10001);
+    this.leftBtnPressed = this.add.image(650, 985, "left_pressed");
+    this.leftBtnPressed.setDepth(10001);
     this.leftBtnPressed.setVisible(false);
-    this.rightBtnNormal = this.add.image(200, 100, "right_normal");
-    this.rightBtnPressed = this.add.image(200, 100, "right_pressed");
+    this.rightBtnNormal = this.add.image(750, 985, "right_normal");
+    this.rightBtnNormal.setDepth(10001);
+    this.rightBtnPressed = this.add.image(750, 985, "right_pressed");
+    this.rightBtnPressed.setDepth(10001);
     this.rightBtnPressed.setVisible(false);
-    this.fireBtnNormal = this.add.image(1000, 100, "fire_normal");
-    this.fireBtnPressed = this.add.image(1000, 100, "fire_pressed");
+    this.fireBtnNormal = this.add.image(1150, 985, "fire_normal");
+    this.fireBtnNormal.setDepth(10001);
+    this.fireBtnPressed = this.add.image(1150, 985, "fire_pressed");
+    this.fireBtnPressed.setDepth(10001);
     this.fireBtnPressed.setVisible(false);
 
     //Sounds
@@ -56,7 +75,7 @@ class GameScene extends Phaser.Scene {
     this.physics.add.overlap(this.player, this.asteroids, this.hurtPlayer, null, this);
 
     //SCORE
-    this.scoreLabel = this.add.bitmapText(10, 5, "pixelFont", "SCORE 000000", 32);
+    this.scoreLabel = this.add.bitmapText(this.origin.x + 10, this.origin.y + 5, "pixelFont", "SCORE 000000", 32);
     this.scoreLabel.setDepth(100);
     this.score = 0;
 
@@ -74,7 +93,8 @@ class GameScene extends Phaser.Scene {
     this.incomingOutline.setVisible(false);
 
     //Lives
-    this.livesLabel = this.add.bitmapText(config.width - 100, 5, "pixelFont", "LIVES  3", 32);
+    this.livesLabel = this.add.bitmapText(this.origin.x + gameSettings.screenWidth - 100, 
+      this.origin.y + 5, "pixelFont", "LIVES  3", 32);
     this.livesLabel.setDepth(100);
     this.lives = 3;
 

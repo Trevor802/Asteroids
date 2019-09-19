@@ -41,28 +41,30 @@ var Asteroid = new Phaser.Class({
         }
 
         this.childAsteroids = [];
-
         // Randomly place the asteroid at the border of the screen
         // TODO: Replace hard-coded screen bounds
         if (posX == -1 && posY == -1) {
-            var perimeter = 2 * (config.width - this.displayWidth) + 2 * (config.height - this.displayHeight);
+            posX += scene.origin.x;
+            posY += scene.origin.y;
+            var perimeter = 2 * (gameSettings.screenWidth - this.displayWidth) + 2 * 
+            (gameSettings.screenHeight - this.displayHeight);
             var placement = perimeter * Math.random();
-            if (placement < 2 * (config.width - this.displayWidth)) {
-                if (placement < (config.width - this.displayWidth)) {
+            if (placement < 2 * (gameSettings.screenWidth - this.displayWidth)) {
+                if (placement < (gameSettings.screenWidth - this.displayWidth)) {
                     posX = placement + this.displayWidth / 2;
                     posY = this.displayHeight / 2;
                 } else {
-                    posX = placement - (config.width - this.displayWidth / 2);
-                    posY = (config.height - this.displayHeight / 2);
+                    posX = placement - (gameSettings.screenWidth - this.displayWidth / 2);
+                    posY = (gameSettings.screenHeight - this.displayHeight / 2);
                 }
             } else {
-                placement -= 2 * (config.width - this.displayWidth);
-                if (placement < (config.height - this.displayHeight)) {
+                placement -= 2 * (gameSettings.screenWidth - this.displayWidth);
+                if (placement < (gameSettings.screenHeight - this.displayHeight)) {
                     posX = this.displayWidth / 2;
                     posY = placement + this.displayHeight / 2;
                 } else {
-                    posX = (config.width - this.displayWidth / 2);
-                    posY = placement - (config.height - this.displayHeight / 2);
+                    posX = (gameSettings.screenWidth - this.displayWidth / 2);
+                    posY = placement - (gameSettings.screenHeight - this.displayHeight / 2);
                 }
             }
         }
@@ -102,9 +104,9 @@ var Asteroid = new Phaser.Class({
 
         // Move the asteroid based on the time passed. Wrap around when reaching the screen edge.
         var x = Phaser.Math.Wrap(this.x + delta * this.speed * this.direction.x,
-            0, config.width);
+            object.scene.origin.x, object.scene.origin.x + gameSettings.screenWidth);
         var y = Phaser.Math.Wrap(this.y + delta * this.speed * this.direction.y,
-            0, config.height);
+            object.scene.origin.y, object.scene.origin.y + gameSettings.screenHeight);
         this.setPosition(x, y);
 
         this.angle += delta * this.spinSpeed;
@@ -112,47 +114,50 @@ var Asteroid = new Phaser.Class({
         // Add "child asteroids" to this asteroid. To the player it just looks like one asteroid
         // wrapping around the screen.
         var childrenCount = 0;
-        if (x >= 0 && x < this.displayWidth / 2) {
+
+        if (x >= object.scene.origin.x && x < object.scene.origin.x + this.displayWidth / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x + config.width, this.y, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x + gameSettings.screenWidth, this.y, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x + config.width, this.y);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x + gameSettings.screenWidth, this.y);
             }
-        } else if (x < config.width && x > config.width - this.displayWidth / 2) {
+        } else if (x < object.scene.origin.x + gameSettings.screenWidth && 
+            x > object.scene.origin.x + gameSettings.screenWidth - this.displayWidth / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x - config.width, this.y, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x - gameSettings.screenWidth, this.y, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x - config.width, this.y);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x - gameSettings.screenWidth, this.y);
             }
         }
 
-        if (y >= 0 && y < this.displayHeight / 2) {
+        if (y >= object.scene.origin.y && y < object.scene.origin.y + this.displayHeight / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x, this.y + config.height, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x, this.y + gameSettings.screenHeight, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y + config.height);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y + gameSettings.screenHeight);
             }
-        } else if (y < config.height && y > config.height - this.displayHeight / 2) {
+        } else if (y < object.scene.origin.y + gameSettings.screenHeight && 
+            y > object.scene.origin.y + gameSettings.screenHeight - this.displayHeight / 2) {
             childrenCount++;
             if (this.childAsteroids.length < childrenCount) {
-                var newAsteroid = new Asteroid(object.scene, this.x, this.y - config.height, this.size);
+                var newAsteroid = new Asteroid(object.scene, this.x, this.y - gameSettings.screenHeight, this.size);
                 newAsteroid.setIsChild(true);
                 this.childAsteroids.push(newAsteroid);
                 object.scene.asteroids.add(newAsteroid, true);
             } else {
-                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y - config.height);
+                this.childAsteroids[childrenCount - 1].setPosition(this.x, this.y - gameSettings.screenHeight);
             }
         }
 
@@ -162,16 +167,16 @@ var Asteroid = new Phaser.Class({
             var cornerX = x;
             var cornerY = y;
 
-            if (x < (config.width / 2)) {
-                cornerX += config.width;
+            if (x < object.scene.origin.x + (gameSettings.screenWidth / 2)) {
+                cornerX += gameSettings.screenWidth;
             } else {
-                cornerX -= config.width;
+                cornerX -= gameSettings.screenWidth;
             }
 
-            if (y < (config.height / 2)) {
-                cornerY += config.height;
+            if (y < object.scene.origin.y + (gameSettings.screenHeight / 2)) {
+                cornerY += gameSettings.screenHeight;
             } else {
-                cornerY -= config.height;
+                cornerY -= gameSettings.screenHeight;
             }
 
             if (this.childAsteroids.length < childrenCount) {

@@ -1,6 +1,6 @@
 var config = {
-  width: 1200,
-  height: 900,
+  width: 1920,
+  height: 1080,
   backgroundColor: 0x000000,
   scene: [LoadingScene, GameScene, RestartScene],
   pixelArt: true,
@@ -15,13 +15,15 @@ var config = {
 }
 
 var gameSettings = {
+  screenWidth: 800,
+  screenHeight: 800,
   playerSpeed: 200,
   rotationSpeed: 5,
   playerAcceleration: 0,
   playerDeceleration: 0.000025,
   shootRecoil: 0.35,
   beamSpeed: 800,
-  beamLifetime: 500,
+  beamLifetime: 400,
   terminalVelocity: 0.4,
   initialAsteroids: 1,
   asteroidWaveIncrease: 1,

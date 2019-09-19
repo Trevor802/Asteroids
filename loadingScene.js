@@ -17,6 +17,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.image("right_pressed", "assets/Images/RightArrowPressed.png");
     this.load.image("fire_normal", "assets/Images/FireUnpressed.png");
     this.load.image("fire_pressed", "assets/Images/FirePressed.png");
+    this.load.image("frame", "assets/Images/Cockpit.png");
 
     //Load spritesheets
     //this.load.spritesheet("beam", "assets/spritesheets/beam.png", {frameWidth: 16, frameHeight: 16});
@@ -43,10 +44,22 @@ class LoadingScene extends Phaser.Scene {
   }
 
   create() {
+
     //Loading Background TileSprite
     this.background = this.add.tileSprite(0, 0, config.width, config.height, "background");
     this.background.setOrigin(0, 0);
 
+    this.frame = this.add.image(0, 0, "frame");
+    this.frame.setOrigin(0, 0);
+    this.frame.setDepth(10000);
+
+    this.leftBtnNormal = this.add.image(650, 985, "left_normal");
+    this.leftBtnNormal.setDepth(10001);
+    this.rightBtnNormal = this.add.image(750, 985, "right_normal");
+    this.rightBtnNormal.setDepth(10001);
+    this.fireBtnNormal = this.add.image(1150, 985, "fire_normal");
+    this.fireBtnNormal.setDepth(10001);
+    
     //Loading Background Music
     this.backgroundMusic = this.sound.add('bgm');
     this.backgroundMusic.play({loop: true, volume: 1, rate: 1});
