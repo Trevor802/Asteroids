@@ -24,19 +24,19 @@ class GameScene extends Phaser.Scene {
     this.physics.world.bounds.width = gameSettings.screenWidth;
     this.physics.world.bounds.height = gameSettings.screenHeight;
 
-    this.leftBtnNormal = this.add.image(650, 985, "left_normal");
+    this.leftBtnNormal = this.add.image(1140, 985, "left_normal");
     this.leftBtnNormal.setDepth(10001);
-    this.leftBtnPressed = this.add.image(650, 985, "left_pressed");
+    this.leftBtnPressed = this.add.image(1140, 985, "left_pressed");
     this.leftBtnPressed.setDepth(10001);
     this.leftBtnPressed.setVisible(false);
-    this.rightBtnNormal = this.add.image(750, 985, "right_normal");
+    this.rightBtnNormal = this.add.image(1240, 985, "right_normal");
     this.rightBtnNormal.setDepth(10001);
-    this.rightBtnPressed = this.add.image(750, 985, "right_pressed");
+    this.rightBtnPressed = this.add.image(1240, 985, "right_pressed");
     this.rightBtnPressed.setDepth(10001);
     this.rightBtnPressed.setVisible(false);
-    this.fireBtnNormal = this.add.image(1150, 985, "fire_normal");
+    this.fireBtnNormal = this.add.image(765, 985, "fire_normal");
     this.fireBtnNormal.setDepth(10001);
-    this.fireBtnPressed = this.add.image(1150, 985, "fire_pressed");
+    this.fireBtnPressed = this.add.image(765, 985, "fire_pressed");
     this.fireBtnPressed.setDepth(10001);
     this.fireBtnPressed.setVisible(false);
 

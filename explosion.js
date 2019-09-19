@@ -15,6 +15,7 @@ class Smoke extends Phaser.GameObjects.Sprite {
     scene.add.existing(this);
     this.angle = angle;
     this.setScale(1);
+    this.setDepth(100);
     this.play("smoke");
   }
 }

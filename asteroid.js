@@ -13,29 +13,22 @@ var Asteroid = new Phaser.Class({
         Phaser.GameObjects.Sprite.call(this, scene)
 
         this.isChild = false;
+        this.selectedTexture = 1;
+
+        this.size = size;
 
         // Change the scale and speed of the asteroids to match the size of the asteroid.
         // Smaller asteroids vary more in speed and can move faster.
         switch (size) {
             case sizes.LARGE:
-                var random = Math.random();
-                if (random < 1 / 3)
-                    this.setTexture('asteroid_big_1');
-                else if (random < 2 / 3)
-                    this.setTexture('asteroid_big_2');
-                else
-                    this.setTexture('asteroid_big_3');
+                this.selectTexture(Math.random());
 
                 this.speed = 0.05;
                 this.angle = 360 * Math.random();
                 this.spinSpeed = 0.025 * Math.random() - 0.0125;
                 break;
             case sizes.MEDIUM:
-                var random = Math.random();
-                if (random < 1 / 2)
-                    this.setTexture('asteroid_medium_1');
-                else
-                    this.setTexture('asteroid_medium_2');
+                this.selectTexture(Math.random());
 
                 this.speed = 0.05 + 0.05 * Math.random();
                 this.angle = 360 * Math.random();
@@ -80,8 +73,6 @@ var Asteroid = new Phaser.Class({
 
         this.setPosition(posX, posY);
         this.setOrigin(0.5);
-
-        this.size = size;
 
         // Randomize the direction of the asteroid
         var dirX = Math.random() - 0.5;
@@ -209,6 +200,7 @@ var Asteroid = new Phaser.Class({
         for (var i = 0; i < this.childAsteroids.length; i++) {
             this.childAsteroids[i].angle = this.angle;
             this.childAsteroids[i].spinSpeed = this.spinSpeed;
+            this.childAsteroids[i].selectTexture(this.selectedTexture);
         }
     },
 
@@ -248,5 +240,34 @@ var Asteroid = new Phaser.Class({
 
     setIsChild: function (isChild) {
         this.isChild = isChild;
+    },
+
+    selectTexture: function (num) {
+        if (this.selectedTexture == num)
+            return;
+
+        this.selectedTexture = num;
+
+        switch (this.size) {
+            case sizes.LARGE:
+                if (num < 1 / 3)
+                    this.setTexture('asteroid_big_1');
+                else if (num < 2 / 3)
+                    this.setTexture('asteroid_big_2');
+                else
+                    this.setTexture('asteroid_big_3');
+
+                break;
+            case sizes.MEDIUM:
+                if (num < 1 / 2)
+                    this.setTexture('asteroid_medium_1');
+                else
+                    this.setTexture('asteroid_medium_2');
+
+                break;
+            case sizes.SMALL:
+                this.setTexture('asteroid_small');
+                break;
+        }
     }
 });
