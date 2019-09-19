@@ -12,11 +12,11 @@ class RestartScene extends Phaser.Scene {
     this.frame.setOrigin(0, 0);
     this.frame.setDepth(10000);
 
-    this.leftBtnNormal = this.add.image(650, 985, "left_normal");
+    this.leftBtnNormal = this.add.image(1140, 985, "left_normal");
     this.leftBtnNormal.setDepth(10001);
-    this.rightBtnNormal = this.add.image(750, 985, "right_normal");
+    this.rightBtnNormal = this.add.image(1240, 985, "right_normal");
     this.rightBtnNormal.setDepth(10001);
-    this.fireBtnNormal = this.add.image(1150, 985, "fire_normal");
+    this.fireBtnNormal = this.add.image(765, 985, "fire_normal");
     this.fireBtnNormal.setDepth(10001);
 
     this.scoreTextLabel = this.add.bitmapText(config.width/2 - 240, config.height/2 - 150, "pixelFont", "YOUR SCORE IS " + globalScore, 64);
