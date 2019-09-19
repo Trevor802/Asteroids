@@ -28,7 +28,7 @@ class LoadingScene extends Phaser.Scene {
     this.load.spritesheet('asteroid_medium_2', 'assets/images/asteroid5.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('asteroid_small', 'assets/images/asteroid6.png', { frameWidth: 32, frameHeight: 32 });
     this.load.spritesheet('explosion', 'assets/spritesheets/explosion.png', {frameWidth: 64, frameHeight: 64});
-    this.load.spritesheet('smoke', 'assets/spritesheets/recoil_smoke.png', {frameWidth: 64, frameHeight: 64});
+    this.load.spritesheet('smoke', 'assets/spritesheets/recoil_smoke.png', {frameWidth: 128, frameHeight: 128});
 
     //Load Title
     this.load.image("title", "assets/images/title2.png");
